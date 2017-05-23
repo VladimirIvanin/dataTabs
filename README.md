@@ -29,6 +29,7 @@ $('.js-tabs-item').dataTabs({
   jqMethodOpen: 'fadeIn',
   jqMethodClose: 'hide',
   classes: {
+    active: 'is-active',
     close: 'hide'
   }
 });
