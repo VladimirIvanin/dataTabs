@@ -25,6 +25,9 @@
 
 ```js
 $('.js-tabs-item').dataTabs({
+  event: 'click',
+  jqMethodOpen: 'fadeIn',
+  jqMethodClose: 'hide',
   classes: {
     close: 'hide'
   }
