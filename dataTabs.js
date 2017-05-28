@@ -90,7 +90,6 @@
           }
         }
       }else{
-        console.log('открываем');
         self.$anchors.removeClass( self.options.classes.active );
         self.$element.addClass( self.options.classes.active );
 
