@@ -80,7 +80,17 @@
 
       var isActive = self.$element.hasClass( self.options.classes.active ) && self.$target.is(':visible');
 
-      if (!isActive) {
+      if (isActive) {
+        if (self.options.useToggle) {
+          self.$anchors.removeClass( self.options.classes.active ).addClass( self.options.classes.close );
+          self.$targets.removeClass( self.options.classes.active ).addClass( self.options.classes.close );
+
+          if (self.options.useJqMethods && self.options.jqMethodOpen && self.options.jqMethodClose) {
+            self.$targets[self.options.jqMethodClose]();
+          }
+        }
+      }else{
+        console.log('открываем');
         self.$anchors.removeClass( self.options.classes.active );
         self.$element.addClass( self.options.classes.active );
 
@@ -96,15 +106,6 @@
 
         if ($swiper && $swiper[0] && $swiper[0].swiper) {
           $swiper[0].swiper.update();
-        }
-
-      }else{
-        if (self.options.useToggle) {
-          self.$anchors.removeClass( self.options.classes.active );
-          self.$element.addClass( self.options.classes.active );
-          if (self.options.useJqMethods && self.options.jqMethodOpen && self.options.jqMethodClose) {
-            self.$targets[self.options.jqMethodClose]();
-          }
         }
       }
 
