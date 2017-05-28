@@ -30,7 +30,7 @@ $('.js-tabs-item').dataTabs({
   jqMethodClose: 'hide',
   classes: {
     active: 'is-active',
-    close: 'hide'
+    close: 'is-close'
   }
 });
 ```
