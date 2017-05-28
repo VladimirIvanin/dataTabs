@@ -1,5 +1,7 @@
 /**
  * Простые jquery-tabs
+ * https://github.com/VladimirIvanin/dataTabs/
+ *
  * [data-tab-control="my-tabs"]
  *  [data-tab-anchor="1"]
  *  [data-tab-anchor="2"]
@@ -24,10 +26,11 @@
       'box': 'tab-box',
       'target': 'tab-target'
     },
-    useJqMethods: true,
-    initOpenTab: true,
-    jqMethodOpen: 'fadeIn',
-    jqMethodClose: 'hide',
+    useToggle: true, // можно переключать состояние активного элемента?
+    useJqMethods: true, // использовать jq методы анимаций?
+    initOpenTab: true, // инициализировать активный таб?
+    jqMethodOpen: 'fadeIn', // jq метод открытия табы
+    jqMethodClose: 'hide', // jq метод закрытия табы
     onTouch: function () {},
     classes: {
       active: 'is-active',
@@ -75,7 +78,7 @@
       event.preventDefault();
       self.options.onTouch(event);
 
-      var isActive = self.$element.hasClass( self.options.classes.active );
+      var isActive = self.$element.hasClass( self.options.classes.active ) && self.$target.is(':visible');
 
       if (!isActive) {
         self.$anchors.removeClass( self.options.classes.active );
@@ -87,7 +90,6 @@
         if (self.options.useJqMethods && self.options.jqMethodOpen && self.options.jqMethodClose) {
           self.$targets[self.options.jqMethodClose]();
           self.$target[self.options.jqMethodOpen]();
-        }else{
         }
 
         var $swiper = self.$target.find('.swiper-container');
@@ -96,6 +98,14 @@
           $swiper[0].swiper.update();
         }
 
+      }else{
+        if (self.options.useToggle) {
+          self.$anchors.removeClass( self.options.classes.active );
+          self.$element.addClass( self.options.classes.active );
+          if (self.options.useJqMethods && self.options.jqMethodOpen && self.options.jqMethodClose) {
+            self.$targets[self.options.jqMethodClose]();
+          }
+        }
       }
 
     });
@@ -114,8 +124,6 @@
     self.$target = self.$box.find( '[data-' + self.options.controls.target + '="' + self.$element.data(self.options.controls.anchor) + '"]' );
 
   }
-
-
 
   $.fn.dataTabs = function ( options ) {
       var args = arguments;
