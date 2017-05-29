@@ -26,7 +26,7 @@
       'box': 'tab-box',
       'target': 'tab-target'
     },
-    useToggle: true, // можно переключать состояние активного элемента?
+    useToggle: false, // можно переключать состояние активного элемента?
     useJqMethods: true, // использовать jq методы анимаций?
     initOpenTab: true, // инициализировать активный таб?
     jqMethodOpen: 'fadeIn', // jq метод открытия табы
