@@ -91,7 +91,7 @@
         }
       }else{
         self.$anchors.removeClass( self.options.classes.active );
-        self.$element.addClass( self.options.classes.active );
+        self.$element.removeClass( self.options.classes.close ).addClass( self.options.classes.active );
 
         self.$targets.removeClass( self.options.classes.active ).addClass( self.options.classes.close );
         self.$target.removeClass( self.options.classes.close ).addClass( self.options.classes.active );
