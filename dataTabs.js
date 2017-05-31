@@ -26,6 +26,7 @@
       'box': 'tab-box',
       'target': 'tab-target'
     },
+    parent: false, // parent selector "string"
     hideOnClosest: false, // hide on closest
     prevent: true, // preventDefault
     useToggle: false, // можно переключать состояние активного элемента?
@@ -50,7 +51,14 @@
       // Extend the defaults with the passed options
       this.options = $.extend(true, {}, defaults, options);
       this.options.parents = $(element).parents();
-      this.options.$parent = this.options.parents[2] || this.options.parents[1] || this.options.parents[0];
+      if (this.options.parent) {
+        this.options.$parent = $(element).parents(this.options.parent + ':first');
+        if (this.options.$parent.length == 0) {
+          this.options.$parent = this.options.parents[2] || this.options.parents[1] || this.options.parents[0];
+        }
+      }else{
+        this.options.$parent = this.options.parents[2] || this.options.parents[1] || this.options.parents[0];
+      }
 
       this.init();
   }
@@ -119,7 +127,9 @@
         var $swiper = self.$target.find('.swiper-container');
 
         if ($swiper && $swiper[0] && $swiper[0].swiper) {
-          $swiper[0].swiper.update();
+          $.each($swiper, function(index, $el) {
+            $el.swiper.update(true);
+          });
         }
       }
 
@@ -129,12 +139,10 @@
   DataTabs.prototype.initElements = function () {
     var self = this;
 
-    var _parents = self.options.parents[2] || self.options.parents[1] || self.options.parents[0];
-
     self.$controls = self.$element.parents( '[data-' + self.options.controls.control + ']' + ':first' );
 
     if (self.$controls.length == 0) {
-      self.$controls = $(_parents);
+      self.$controls = $(self.options.$parent);
     }
 
     self.$anchors = self.$controls.find( '[data-' + self.options.controls.anchor + ']' );
@@ -142,7 +150,7 @@
     self.$box = $( '[data-' + self.options.controls.box + '="' + self.$controls.data(self.options.controls.control) + '"]' );
 
     if (self.$box.length == 0) {
-      self.$box = $(_parents);
+      self.$box = $(self.options.$parent);
     }
 
     self.$targets = self.$box.find( '[data-' + self.options.controls.target + ']' );
