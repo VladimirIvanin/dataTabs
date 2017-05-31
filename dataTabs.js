@@ -1,21 +1,21 @@
 /**
- * Простые jquery-tabs
- * https://github.com/VladimirIvanin/dataTabs/
- *
- * [data-tab-control="my-tabs"]
- *  [data-tab-anchor="1"]
- *  [data-tab-anchor="2"]
- *
- * [data-tab-box="my-tabs"]
- *  [data-tab-target="1"]
- *  [data-tab-target="2"]
- *
- *  $('.tabs-item').dataTabs({
+* Простые jquery-tabs
+* https://github.com/VladimirIvanin/dataTabs/
+*
+* [data-tab-control="my-tabs"]
+*  [data-tab-anchor="1"]
+*  [data-tab-anchor="2"]
+*
+* [data-tab-box="my-tabs"]
+*  [data-tab-target="1"]
+*  [data-tab-target="2"]
+*
+*  $('.tabs-item').dataTabs({
       classes: {
-        close: 'hide'
+      close: 'hide'
       }
     });
- */
+*/
 ;(function ( $, window, undefined ) {
 
   var defaults = {
@@ -42,25 +42,25 @@
   };
 
   function DataTabs(element, options) {
-      this.element = element; // Selected DOM element
-      this.$element = $(element); // Selected jQuery element
+    this.element = element; // Selected DOM element
+    this.$element = $(element); // Selected jQuery element
 
-      this.tabs = []; // Create tabs array
-      this.state = ''; // Define the plugin state (tabs/accordion)
+    this.tabs = []; // Create tabs array
+    this.state = ''; // Define the plugin state (tabs/accordion)
 
-      // Extend the defaults with the passed options
-      this.options = $.extend(true, {}, defaults, options);
-      this.options.parents = $(element).parents();
-      if (this.options.parent) {
-        this.options.$parent = $(element).parents(this.options.parent + ':first');
-        if (this.options.$parent.length == 0) {
-          this.options.$parent = this.options.parents[2] || this.options.parents[1] || this.options.parents[0];
-        }
-      }else{
+    // Extend the defaults with the passed options
+    this.options = $.extend(true, {}, defaults, options);
+    this.options.parents = $(element).parents();
+    if (this.options.parent) {
+      this.options.$parent = $(element).parents(this.options.parent + ':first');
+      if (this.options.$parent.length == 0) {
         this.options.$parent = this.options.parents[2] || this.options.parents[1] || this.options.parents[0];
       }
+    }else{
+      this.options.$parent = this.options.parents[2] || this.options.parents[1] || this.options.parents[0];
+    }
 
-      this.init();
+    this.init();
   }
 
 
@@ -159,42 +159,49 @@
 
   }
 
-  $.fn.dataTabs = function ( _options ) {
-      var args = arguments;
-      var instance;
-      var options = _options || {};
-      var _self = $(this)[0];
-
-      if (_self && _self.className) {
-        var $selector = '.' + _self.className.trim().replace(/\s/g, '.');
+  /**
+  * Проверить инициализирован ли плагин
+  */
+  function _checkInitInstance(_self) {
+    if (_self && _self.className) {
+      var $selector = '.' + _self.className.trim().replace(/\s/g, '.');
+      $(window).on('load', function(event) {
         $(document).on('click', $selector, function(event) {
           if (!$.data(this, 'datatabs')) {
-            console.warn('Проверьте порядок подключения dataTabs!');
-            $.data(this, 'datatabs', new DataTabs( this, options ));
+            console.warn('Проверьте порядок инициализации dataTabs!');
           }
         });
+      });
+    }
+  }
+
+  $.fn.dataTabs = function ( _options ) {
+    var args = arguments;
+    var instance;
+    var options = _options || {};
+
+    _checkInitInstance($(this)[0])
+
+    if (options === undefined || typeof options === 'object') {
+      return this.each(function () {
+        if (!$.data(this, 'datatabs')) {
+          $.data(this, 'datatabs', new DataTabs( this, options ));
+        }
+      });
+    } else if (typeof options === 'string' && options[0] !== '_' && options !== 'init') {
+      instance = $.data(this[0], 'datatabs');
+
+      // Allow instances to be destroyed via the 'destroy' method
+      if (options === 'destroy') {
+        // TODO: destroy instance classes, etc
+        $.data(this, 'datatabs', null);
       }
 
-      if (options === undefined || typeof options === 'object') {
-          return this.each(function () {
-              if (!$.data(this, 'datatabs')) {
-                  $.data(this, 'datatabs', new DataTabs( this, options ));
-              }
-          });
-      } else if (typeof options === 'string' && options[0] !== '_' && options !== 'init') {
-          instance = $.data(this[0], 'datatabs');
-
-          // Allow instances to be destroyed via the 'destroy' method
-          if (options === 'destroy') {
-              // TODO: destroy instance classes, etc
-              $.data(this, 'datatabs', null);
-          }
-
-          if (instance instanceof datatabs && typeof instance[options] === 'function') {
-              return instance[options].apply( instance, Array.prototype.slice.call( args, 1 ) );
-          } else {
-              return this;
-          }
+      if (instance instanceof datatabs && typeof instance[options] === 'function') {
+        return instance[options].apply( instance, Array.prototype.slice.call( args, 1 ) );
+      } else {
+        return this;
       }
+    }
   };
 }(jQuery, window));
