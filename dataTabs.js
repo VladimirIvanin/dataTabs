@@ -26,6 +26,8 @@
       'box': 'tab-box',
       'target': 'tab-target'
     },
+    hideOnClosest: false, // hide on closest
+    prevent: true, // preventDefault
     useToggle: false, // можно переключать состояние активного элемента?
     useJqMethods: true, // использовать jq методы анимаций?
     initOpenTab: true, // инициализировать активный таб?
@@ -47,6 +49,8 @@
 
       // Extend the defaults with the passed options
       this.options = $.extend(true, {}, defaults, options);
+      this.options.parents = $(element).parents();
+      this.options.$parent = this.options.parents[2] || this.options.parents[1] || this.options.parents[0];
 
       this.init();
   }
@@ -70,15 +74,26 @@
     });
   }
 
-
   DataTabs.prototype.initBinds = function () {
     var self = this;
 
+    if (self.options.hideOnClosest) {
+      $(document).on('click', function(event) {
+        var isClose = $(event.target).closest( self.options.$parent ).length == 0;
+
+        if (isClose && self.options.useJqMethods && self.options.jqMethodClose) {
+          self.$targets[self.options.jqMethodClose]();
+        }
+      });
+    }
+
     self.$element.on(self.options.event, function(event) {
-      event.preventDefault();
+      if (self.options.prevent) {
+        event.preventDefault();
+      }
       self.options.onTouch(event);
 
-      var isActive = self.$element.hasClass( self.options.classes.active ) && self.$target.is(':visible');
+      var isActive = self.$element.hasClass( self.options.classes.active ) && self.$target.is(':visible') && self.$target.hasClass( self.options.classes.active );
 
       if (isActive) {
         if (self.options.useToggle) {
@@ -114,20 +129,43 @@
   DataTabs.prototype.initElements = function () {
     var self = this;
 
+    var _parents = self.options.parents[2] || self.options.parents[1] || self.options.parents[0];
+
     self.$controls = self.$element.parents( '[data-' + self.options.controls.control + ']' + ':first' );
+
+    if (self.$controls.length == 0) {
+      self.$controls = $(_parents);
+    }
+
     self.$anchors = self.$controls.find( '[data-' + self.options.controls.anchor + ']' );
 
     self.$box = $( '[data-' + self.options.controls.box + '="' + self.$controls.data(self.options.controls.control) + '"]' );
 
+    if (self.$box.length == 0) {
+      self.$box = $(_parents);
+    }
 
     self.$targets = self.$box.find( '[data-' + self.options.controls.target + ']' );
+
     self.$target = self.$box.find( '[data-' + self.options.controls.target + '="' + self.$element.data(self.options.controls.anchor) + '"]' );
 
   }
 
-  $.fn.dataTabs = function ( options ) {
+  $.fn.dataTabs = function ( _options ) {
       var args = arguments;
       var instance;
+      var options = _options || {};
+      var _self = $(this)[0];
+
+      if (_self && _self.className) {
+        var $selector = '.' + _self.className.trim().replace(/\s/g, '.');
+        $(document).on('click', $selector, function(event) {
+          if (!$.data(this, 'datatabs')) {
+            console.warn('Проверьте порядок подключения dataTabs!');
+            $.data(this, 'datatabs', new DataTabs( this, options ));
+          }
+        });
+      }
 
       if (options === undefined || typeof options === 'object') {
           return this.each(function () {
