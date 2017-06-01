@@ -92,6 +92,12 @@
         if (isClose && self.options.useJqMethods && self.options.jqMethodClose) {
           self.$targets[self.options.jqMethodClose]();
         }
+
+        if (isClose) {
+          self.$anchors.removeClass( self.options.classes.active ).addClass( self.options.classes.close );;
+
+          self.$targets.removeClass( self.options.classes.active ).addClass( self.options.classes.close );
+        }
       });
     }
 
