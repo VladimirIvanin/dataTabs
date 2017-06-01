@@ -94,7 +94,7 @@
         }
 
         if (isClose) {
-          self.$anchors.removeClass( self.options.classes.active ).addClass( self.options.classes.close );;
+          self.$anchors.removeClass( self.options.classes.active );
 
           self.$targets.removeClass( self.options.classes.active ).addClass( self.options.classes.close );
         }
