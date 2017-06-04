@@ -1,21 +1,15 @@
-/**
-* Простые jquery-tabs
-* https://github.com/VladimirIvanin/dataTabs/
-*
-* [data-tab-control="my-tabs"]
-*  [data-tab-anchor="1"]
-*  [data-tab-anchor="2"]
-*
-* [data-tab-box="my-tabs"]
-*  [data-tab-target="1"]
-*  [data-tab-target="2"]
-*
-*  $('.tabs-item').dataTabs({
-      classes: {
-      close: 'hide'
-      }
-    });
-*/
+// ==================================================
+// dataTabs v0.0.1
+// https://github.com/VladimirIvanin/dataTabs/
+//
+// Licensed under the MIT license:
+// https://opensource.org/licenses/MIT
+//
+// Copyright 2017, Vladimir Ivanin
+// https://github.com/VladimirIvanin/
+//
+// ==================================================
+
 ;(function ( $, window, undefined ) {
 
   var defaults = {
