@@ -39,7 +39,7 @@
     jqMethodClose: 'hide', // jq метод закрытия табы
     onTouch: function () {},
     classes: {
-      hover: 'is-hover',
+      hover: 'is-data-tabs-hover',
       active: 'is-active',
       close: 'is-close'
     }
