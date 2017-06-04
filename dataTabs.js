@@ -26,6 +26,9 @@
       'box': 'tab-box',
       'target': 'tab-target'
     },
+    active: 1, // активный элемент
+    speedSwitching: 10000, // скорость авто переключения
+    autoSwitching: false, // авто переключение
     parent: false, // parent selector "string"
     hideOnClosest: false, // hide on closest
     prevent: true, // preventDefault
@@ -36,6 +39,7 @@
     jqMethodClose: 'hide', // jq метод закрытия табы
     onTouch: function () {},
     classes: {
+      hover: 'is-hover',
       active: 'is-active',
       close: 'is-close'
     }
@@ -72,18 +76,85 @@
     if (self.options.initOpenTab) {
       self.initTabs();
     }
+    if (self.options.autoSwitching) {
+      self.initAutoSwitching();
+    }
+  }
+
+  DataTabs.prototype.initAutoSwitching = function () {
+    var self = this;
+
+    var bindSwitch = $(self.options.$parent).get(0).dataTabs.bindSwitch
+    var triggerTabs = null;
+    if (!bindSwitch) {
+      $(self.options.$parent).get(0).dataTabs.bindSwitch = true;
+
+      $(self.options.$parent).on('touchstart', function(event) {
+        clearInterval(triggerTabs);
+      });
+
+      $(self.options.$parent).hover(function() {
+        clearInterval(triggerTabs);
+      }, function() {
+        triggerTabs = setInterval(nextTab, self.options.speedSwitching);
+      });
+
+      setTimeout(function () {
+        triggerTabs = setInterval(nextTab, self.options.speedSwitching);
+      }, 1000)
+
+      var nextTab = function () {
+        var $anchors = $(self.options.$parent).find( '[data-' + self.options.controls.anchor + ']' )
+        var _size = $anchors.length;
+        var _index = $(self.options.$parent).find( '[data-' + self.options.controls.anchor + '].' + self.options.classes.active ).index();
+        var _next = 0;
+        if (typeof _index == 'number') {
+          _next = ++_index;
+        }
+        if (_next >= _size) {
+          _next = 0;
+        }
+
+        var isFocused = $(self.options.$parent).hasClass(self.options.classes.hover);
+
+        if (!isFocused) {
+          $anchors.eq(_next).trigger( self.options.event );
+        }
+      }
+
+
+    }
+
   }
 
   DataTabs.prototype.initTabs = function () {
     var self = this;
 
+    var _activeTab = --self.options.active;
+
+    if (_activeTab < 0) {
+      _activeTab = 0;
+    }
+
     self.$controls.each(function(index, el) {
-      $(el).find( '[data-' + self.options.controls.anchor + ']:first' ).trigger( self.options.event );
+      $(el).find( '[data-' + self.options.controls.anchor + ']' ).eq(_activeTab).trigger( self.options.event );
     });
   }
 
   DataTabs.prototype.initBinds = function () {
     var self = this;
+
+    var bindHover = $(self.options.$parent).get(0).dataTabs.bindHover;
+
+    if (!bindHover) {
+      $(self.options.$parent).get(0).dataTabs.bindHover = true;
+
+      $(self.options.$parent).hover(function() {
+        $(this).addClass(self.options.classes.hover);
+      }, function() {
+        $(this).removeClass(self.options.classes.hover);
+      });
+    }
 
     if (self.options.hideOnClosest) {
       $(document).on('click', function(event) {
@@ -162,6 +233,12 @@
     self.$targets = self.$box.find( '[data-' + self.options.controls.target + ']' );
 
     self.$target = self.$box.find( '[data-' + self.options.controls.target + '="' + self.$element.data(self.options.controls.anchor) + '"]' );
+
+    if (!$(self.options.$parent).get(0).dataTabs) {
+      $(self.options.$parent).get(0).dataTabs = {};
+      $(self.options.$parent).get(0).dataTabs.list = [];
+    }
+    $(self.options.$parent).get(0).dataTabs.list.push(self);
 
   }
 
