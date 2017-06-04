@@ -101,12 +101,19 @@
 
       setTimeout(function () {
         triggerTabs = setInterval(nextTab, self.options.speedSwitching);
-      }, 1000)
+      }, 0)
 
       var nextTab = function () {
         var $anchors = $(self.options.$parent).find( '[data-' + self.options.controls.anchor + ']' )
         var _size = $anchors.length;
-        var _index = $(self.options.$parent).find( '[data-' + self.options.controls.anchor + '].' + self.options.classes.active ).index();
+        var _index = 0;
+
+        $(self.options.$parent).find( '[data-' + self.options.controls.anchor + ']' ).each(function(index, el) {
+          if ($(el).hasClass(self.options.classes.active)) {
+            _index = index;
+          }
+        });
+
         var _next = 0;
         if (typeof _index == 'number') {
           _next = ++_index;
