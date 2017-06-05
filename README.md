@@ -1,4 +1,4 @@
-# Простые табы
+# Табы на jQuery
 
 ```
 <div class="js-tabs">
