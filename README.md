@@ -28,10 +28,6 @@ $('.js-tabs-item').dataTabs({
   event: 'click',
   parent: '.js-tabs',
   jqMethodOpen: 'fadeIn',
-  jqMethodClose: 'hide',
-  classes: {
-    active: 'is-active',
-    close: 'is-close'
-  }
+  jqMethodClose: 'hide'
 });
 ```
