@@ -1,5 +1,6 @@
 import autoSwitching from './autoSwitching.js';
 import triggerTab from './triggerTab.js';
+import initTabs from './initTabs.js';
 import initElements from './initElements.js';
 import { binding } from './binding.js';
 import defaults from './defaults.js';
@@ -7,24 +8,12 @@ import defaults from './defaults.js';
 ;(function ( $, window, undefined ) {
 
   function DataTabs(element, options) {
-    this.element = element; // Selected DOM element
-    this.$element = $(element); // Selected jQuery element
+    this.element = element;
+    this.$element = $(element);
 
     this.states = {};
-    this.tabs = []; // Create tabs array
 
-    // Extend the defaults with the passed options
     this.options = $.extend(true, {}, defaults, options);
-
-    this.options.parents = $(element).parents();
-    if (this.options.parent) {
-      this.options.$parent = $(element).parents(this.options.parent + ':first');
-      if (this.options.$parent.length == 0) {
-        this.options.$parent = this.options.parents[2] || this.options.parents[1] || this.options.parents[0];
-      }
-    }else{
-      this.options.$parent = this.options.parents[2] || this.options.parents[1] || this.options.parents[0];
-    }
 
     this.init();
   }
@@ -40,31 +29,21 @@ import defaults from './defaults.js';
 
     self.initElements();
     self.initBinds();
+
     if (self.options.initOpenTab) {
-      self.initTabs();
+      self.initTabs(self, self.options.activeIndex);
     }
+
     if (self.options.autoSwitching) {
       self.initAutoSwitching();
     }
+
   }
 
+  DataTabs.prototype.initElements = initElements;
+  DataTabs.prototype.initTabs = initTabs;
   DataTabs.prototype.initAutoSwitching = autoSwitching;
-
-  DataTabs.prototype.initTabs = function () {
-    var self = this;
-
-    var _activeTab = --self.options.active;
-
-    if (_activeTab < 0) {
-      _activeTab = 0;
-    }
-
-    triggerTab(self, _activeTab)
-  }
-
   DataTabs.prototype.initBinds = binding;
-
-  DataTabs.prototype.initElements = initElements
 
   /**
   * Проверить инициализирован ли плагин
@@ -90,7 +69,7 @@ import defaults from './defaults.js';
     _checkInitInstance($(this)[0])
 
     if (options === undefined || typeof options === 'object') {
-      return this.each(function () {
+      return this.each(function (index, el) {
         if (!$.data(this, 'datatabs')) {
           $.data(this, 'datatabs', new DataTabs( this, options ));
         }

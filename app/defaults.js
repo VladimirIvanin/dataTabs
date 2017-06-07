@@ -6,7 +6,7 @@ const defaults = {
     'box': 'tab-box',
     'target': 'tab-target'
   },
-  active: 1, // активный элемент
+  activeIndex: 1, // активный элемент
   speedSwitching: 10000, // скорость авто переключения
   autoSwitching: false, // авто переключение
   parent: false, // parent selector "string"

@@ -2,6 +2,20 @@
 
 export default function initElements () {
   const self = this;
+  const options = self.options;
+
+  options.parents = self.$element.parents();
+
+  if (options.parent) {
+    options.$parent = self.$element.parents(options.parent + ':first');
+    if (options.$parent.length == 0) {
+      options.$parent = options.parents[2] || options.parents[1] || options.parents[0];
+    }
+  }else{
+    options.$parent = options.parents[2] || options.parents[1] || options.parents[0];
+  }
+
+
   self.isDataAnchors = self.$element.is(getDataAttrName(self.options.controls.anchor));
   self.isIdAnchors = self.$element.is('[href]');
 
