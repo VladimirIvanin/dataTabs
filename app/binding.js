@@ -10,13 +10,16 @@ export function bindSwitchers(self) {
   let stopIndex = self.counterElements - 1;
 
   if (self.$next) {
-    $(document).on('datatabs:update', function(event) {
-      let nextStatus = getStatusNext(self, stopIndex);
+    $(document).on('datatabs:update', function(event, uuid) {
+      const mainId = $(self.options.$parent).get(0).dataTabs.uuid;
+      if (uuid == mainId) {
+        let nextStatus = getStatusNext(self, stopIndex);
 
-      if (nextStatus.isNext) {
-        self.$next.removeClass(options.classes.disabledSwitcher);
-      }else{
-        self.$next.addClass(options.classes.disabledSwitcher);
+        if (nextStatus.isNext) {
+          self.$next.removeClass(options.classes.disabledSwitcher);
+        }else{
+          self.$next.addClass(options.classes.disabledSwitcher);
+        }
       }
     });
 
@@ -31,13 +34,16 @@ export function bindSwitchers(self) {
   }
 
   if (self.$prev) {
-    $(document).on('datatabs:update', function(event) {
-      let prevStatus = getStatusPrev(self, stopIndex);
+    $(document).on('datatabs:update', function(event, uuid) {
+      const mainId = $(self.options.$parent).get(0).dataTabs.uuid;
+      if (uuid == mainId) {
+        let prevStatus = getStatusPrev(self, stopIndex);
 
-      if (prevStatus.isPrev) {
-        self.$prev.removeClass(options.classes.disabledSwitcher);
-      }else{
-        self.$prev.addClass(options.classes.disabledSwitcher);
+        if (prevStatus.isPrev) {
+          self.$prev.removeClass(options.classes.disabledSwitcher);
+        }else{
+          self.$prev.addClass(options.classes.disabledSwitcher);
+        }
       }
     });
 

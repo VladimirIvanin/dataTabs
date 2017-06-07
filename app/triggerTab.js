@@ -35,7 +35,6 @@ export default function triggerTab(self, index) {
   }else{
     $anchors.removeClass( options.classes.activeButton ).addClass( options.classes.closeButton );
     $anchor.removeClass( options.classes.closeButton ).addClass( options.classes.activeButton );
-
     $targets.removeClass( options.classes.activeTab ).addClass( options.classes.closeTab );
 
     $target.removeClass( options.classes.closeTab ).addClass( options.classes.activeTab );
@@ -48,10 +47,12 @@ export default function triggerTab(self, index) {
     // Активный индекс элемента в html коллекции кнопок.
     self.states.activeIndex = index;
 
+    // колбек обновления
     self.options.onTab(event, self);
 
-    // обновление табов
-    $( document ).trigger( "datatabs:update", [{"dataTabs": self}] );
+    const main_uuid = $(self.options.$parent).get(0).dataTabs.uuid;
+    // обновление табов (глобальный евент)
+    $( document ).trigger( "datatabs:update", [main_uuid] );
 
     var $swiper = $target.find('.swiper-container');
     updateSwiper($swiper);

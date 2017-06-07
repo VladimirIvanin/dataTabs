@@ -13,10 +13,10 @@ const defaults = {
   speedSwitching: 10000, // скорость авто переключения
   autoSwitching: false, // авто переключение
   parent: false, // parent selector "string"
-  hideOnClosest: true, // hide on closest
+  hideOnClosest: false, // hide on closest
   prevent: true, // preventDefault
   useJqMethods: true, // использовать jq методы анимаций?
-  loop: true, // замкнуть цикл при переключении?
+  loop: false, // замкнуть цикл при переключении?
   initOpenTab: true, // инициализировать активный таб?
   pauseVideoAudio: true, // ставить на паузу аудио и видео при переключении табов?
   state: 'tab', // роль плагина tab/accordion

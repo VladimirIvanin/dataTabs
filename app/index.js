@@ -1,6 +1,7 @@
 import autoSwitching from './autoSwitching.js';
 import triggerTab from './triggerTab.js';
 import initTabs from './initTabs.js';
+import generateUUID from './generateUUID.js';
 import {initElements, initSwitchers} from './initElements.js';
 import {  binding,
           bindSwitchers,
@@ -39,20 +40,22 @@ import defaults from './defaults.js';
     bindTriggers(self);
 
     var isLastElement = self.options.indexElement == self.counterElements;
-    if (self.options.initOpenTab && isLastElement) {
-      self.initTabs(self, self.options.activeIndex);
-    }
-
-    if (self.options.autoSwitching) {
-      self.initAutoSwitching();
-    }
 
     if (isLastElement) {
       initSwitchers(self);
       bindSwitchers(self);
       bindHover(self);
       hideOnClosest(self);
+      $(self.options.$parent).get(0).dataTabs.uuid = generateUUID();
       self.options.onInit(self);
+    }
+
+    if (self.options.initOpenTab && isLastElement) {
+      self.initTabs(self, self.options.activeIndex);
+    }
+
+    if (self.options.autoSwitching) {
+      self.initAutoSwitching();
     }
 
   }
