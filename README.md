@@ -1,5 +1,11 @@
 # Табы на jQuery
 
+## CDN
+
+```
+  <script src="https://cdn.jsdelivr.net/gh/VladimirIvanin/dataTabs@0.1.0/dist/dataTabs.js"></script>
+```
+
 | Параметр        | Тип      | Значение поумолчанию                                                                                                                                | Описание                                                                                 |
 |-----------------|----------|-----------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------|
 | event           | string   | 'click'                                                                                                                                             | Событие по которому будет происходить переключение табов.                                |
@@ -18,7 +24,10 @@
 | onTab           | function | -                                                                                                                                                   | Callback при нажатии на переключатель                                                    |
 | onMouseover     | function | -                                                                                                                                                   | Навели курсор на блок табов                                                              |
 | onMouseout      | function | -                                                                                                                                                   | Убрали курсор с блока табов                                                              |
-| classes         | object   | hover: 'is-data-tabs-hover',,activeButton: 'is-button-active',,closeButton: 'is-button-close',,activeTab: 'is-tab-active',,closeTab: 'is-tab-close' |                                                                                          |
+| classes         | object   | `hover`: 'is-data-tabs-hover'<br/>`activeButton`: 'is-button-active'<br/>`closeButton`: 'is-button-close'<br/>`activeTab`: 'is-tab-active'<br/>`closeTab`: 'is-tab-close' | Классы состояний                                                                                         |
+
+
+## Пример
 
 ```
 <div class="js-tabs">
