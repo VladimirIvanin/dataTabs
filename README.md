@@ -47,6 +47,8 @@
 
 [Онлайн пример аккордеона на codepen.io.](https://codepen.io/brainmurder/pen/jwPoMB)
 
+[Онлайн пример переключения фотографий на codepen.io.](https://codepen.io/brainmurder/pen/RgWbxw)
+
 ```
 <div class="js-tabs">
   <div>
