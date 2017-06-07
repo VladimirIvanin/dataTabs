@@ -2,6 +2,12 @@
 
 export default function initElements () {
   const self = this;
+  self.isDataAnchors = self.$element.is(getDataAttrName(self.options.controls.anchor));
+  self.isIdAnchors = self.$element.is('[href]');
+
+  if (!self.isDataAnchors) {
+    console.warn('Не установлены дата атрибуты!', getDataAttrName(self.options.controls.anchor));
+  }
 
   self.$controls = self.$element.parents( getDataAttrName(self.options.controls.control) + ':first' );
 
