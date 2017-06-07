@@ -27,6 +27,16 @@
 | classes         | object   | `hover`: 'is-data-tabs-hover'<br/>`activeButton`: 'is-button-active'<br/>`closeButton`: 'is-button-close'<br/>`activeTab`: 'is-tab-active'<br/>`closeTab`: 'is-tab-close' | Классы состояний                                                                                         |
 
 
+## Разметка
+
+Вместо привычных `href="#target"/id="target"` для связки переключателей и блоков иcпользуются data атрибуты.
+
+`data-tab-anchor` - дата атрибут переключателей.
+
+`data-tab-target` - дата атрибут блоков содержимого.
+
+> Значения атрибутов переключателей и блоков содержимого должны быть идентичны
+
 ## Пример
 
 ```
