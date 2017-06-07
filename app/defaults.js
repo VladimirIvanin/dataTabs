@@ -14,6 +14,7 @@ const defaults = {
   prevent: true, // preventDefault
   useJqMethods: true, // использовать jq методы анимаций?
   initOpenTab: true, // инициализировать активный таб?
+  pauseVideoAudio: true, // ставить на паузу аудио и видео при переключении табов?
   state: 'tab', // роль плагина tab/accordion
   jqMethodOpen: 'fadeIn', // jq метод открытия табы
   jqMethodClose: 'hide', // jq метод закрытия табы
