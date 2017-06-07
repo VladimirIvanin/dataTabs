@@ -1,15 +1,3 @@
-// ==================================================
-// dataTabs v0.0.1
-// https://github.com/VladimirIvanin/dataTabs/
-//
-// Licensed under the MIT license:
-// https://opensource.org/licenses/MIT
-//
-// Copyright 2017, Vladimir Ivanin
-// https://github.com/VladimirIvanin/
-//
-// ==================================================
-
 import autoSwitching from './autoSwitching.js';
 import triggerTab from './triggerTab.js';
 import initElements from './initElements.js';
@@ -26,7 +14,7 @@ import defaults from './defaults.js';
     this.tabs = []; // Create tabs array
 
     // Extend the defaults with the passed options
-    this.options = Object.assign({}, defaults, options);
+    this.options = $.extend(true, {}, defaults, options);
 
     this.options.parents = $(element).parents();
     if (this.options.parent) {
@@ -108,14 +96,7 @@ import defaults from './defaults.js';
         }
       });
     } else if (typeof options === 'string' && options[0] !== '_' && options !== 'init') {
-      instance = $.data(this[0], 'datatabs');
-
-      // Allow instances to be destroyed via the 'destroy' method
-      if (options === 'destroy') {
-        // TODO: destroy instance classes, etc
-        $.data(this, 'datatabs', null);
-      }
-
+      instance = $.data(this, 'datatabs');
       if (instance instanceof datatabs && typeof instance[options] === 'function') {
         return instance[options].apply( instance, Array.prototype.slice.call( args, 1 ) );
       } else {

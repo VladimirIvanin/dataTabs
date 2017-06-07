@@ -91,11 +91,11 @@ function bindHover(self) {
   bindHover = true;
 
   $parentTabs.hover((event) => {
+    $parentTabs.addClass(options.classes.hover);
     options.onMouseover(event, self);
-    $(this).addClass(self.options.classes.hover);
   }, (event) => {
+    $parentTabs.removeClass(options.classes.hover);
     options.onMouseout(event, self);
-    $(this).removeClass(self.options.classes.hover);
   });
 
 }

@@ -36,7 +36,7 @@ export default function triggerTab(self, index) {
       $target[options.jqMethodOpen]();
     }
 
-    self.states.activeIndex = $target.index();
+    self.states.activeIndex = $anchor.index();
 
     var $swiper = $target.find('.swiper-container');
 

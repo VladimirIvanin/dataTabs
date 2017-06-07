@@ -3,12 +3,15 @@
 const webpack = require('webpack');
 const path = require('path');
 
+const dist = path.resolve(__dirname, 'dist/');
+const test = path.resolve(__dirname, 'test/');
+
 module.exports = {
   entry: './app/index.js',
 
   output: {
     filename: 'datatabs.js',
-    path: path.resolve(__dirname, 'dist')
+    path: dist
   },
 
   watch: true,
@@ -20,7 +23,8 @@ module.exports = {
         compress: {
             warnings: false
         }
-    })
+    }),
+    new webpack.BannerPlugin('dataTabs v0.1.0\nhttps://github.com/VladimirIvanin/dataTabs/')
   ],
 
   module: {
@@ -33,7 +37,7 @@ module.exports = {
   },
 
   devServer: {
-    contentBase: __dirname + '/test/',
+    contentBase: test,
     hot: true,
     inline: true
   }
