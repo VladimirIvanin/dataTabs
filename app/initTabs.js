@@ -8,5 +8,6 @@ export default function initTabs (self, activeIndex) {
     _activeTab = 0;
   }
 
-  triggerTab(self, _activeTab)
+  triggerTab(self, _activeTab);
+
 }

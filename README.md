@@ -3,7 +3,7 @@
 ## CDN
 
 ```
-  <script src="https://cdn.jsdelivr.net/gh/VladimirIvanin/dataTabs@0.3.0/dist/dataTabs.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/VladimirIvanin/dataTabs@0.4.0/dist/dataTabs.js"></script>
 ```
 
 ## Настройки
@@ -12,6 +12,7 @@
 |-----------------|----------|-----------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------|
 | event           | string   | 'click'                                                                                                                                             | Событие по которому будет происходить переключение табов.                                |
 | prevent         | boolean  | true                                                                                                                                                | Использовать preventDefault?                                                             |
+| onInit           | function   |  -                                                                                                                                             | Callback инициализации плагина.                                |
 | initOpenTab     | boolean  | true                                                                                                                                                | Открывать активный таб при инициализации?                                                |
 | activeIndex          | number   | 1                                                                                                                                                   | Активный элемент                                                                         |
 | autoSwitching   | boolean  | false                                                                                                                                               | Авто переключение                                                                        |

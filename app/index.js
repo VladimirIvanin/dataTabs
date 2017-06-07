@@ -25,6 +25,9 @@ import defaults from './defaults.js';
     if (self.options.state == 'accordion') {
       // можно переключать состояние активного элемента
       self.options.useToggle = true;
+      if (self.options.jqMethodCloseSpeed == 0) {
+        self.options.jqMethodCloseSpeed = self.options.jqMethodOpenSpeed;
+      }
     }
 
     self.initElements();
@@ -37,6 +40,10 @@ import defaults from './defaults.js';
 
     if (self.options.autoSwitching) {
       self.initAutoSwitching();
+    }
+
+    if (isLastElement) {
+      self.options.onInit(self);
     }
 
   }
