@@ -22,10 +22,19 @@ function bindTriggers(self) {
     if (options.prevent) {
       event.preventDefault();
     }
+    const dataId = self.options.controls.anchor;
 
     options.onTab(event, self);
 
-    triggerTab(self, self.$element.index())
+    let _index = 0;
+    self.$box.find( '[data-' + dataId + ']' ).each(function(index, el) {
+      var _id = $(el).data(dataId);
+      if (_id == self.$element.data(dataId)) {
+        _index = index;
+      }
+    });
+
+    triggerTab(self, _index)
 
   });
 }

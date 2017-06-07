@@ -4,7 +4,7 @@ export default function initElements () {
   const self = this;
   const options = self.options;
 
-  options.parents = self.$element.parents();
+  options.parents = self.$element.parents().not('body, html');
 
   if (options.parent) {
     options.$parent = self.$element.parents(options.parent + ':first');
@@ -28,6 +28,8 @@ export default function initElements () {
   if (self.$controls.length == 0) {
     self.$controls = $(self.options.$parent);
   }
+
+
 
   self.$anchors = self.$controls.find( getDataAttrName(self.options.controls.anchor) );
 
