@@ -10,7 +10,7 @@ module.exports = {
   entry: './app/index.js',
 
   output: {
-    filename: 'datatabs.js',
+    filename: 'dataTabs.js',
     path: dist
   },
 
