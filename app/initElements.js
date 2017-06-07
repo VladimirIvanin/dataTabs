@@ -48,6 +48,8 @@ export default function initElements () {
     $(self.options.$parent).get(0).dataTabs.list = [];
   }
 
+  self.counterElements = self.$anchors.length
+
   $(self.options.$parent).get(0).dataTabs.list.push(self);
 
 }

@@ -16,7 +16,9 @@ const defaults = {
   initOpenTab: true, // инициализировать активный таб?
   pauseVideoAudio: true, // ставить на паузу аудио и видео при переключении табов?
   state: 'tab', // роль плагина tab/accordion
+  jqMethodOpenSpeed: 1000, // скорость открытия табы
   jqMethodOpen: 'fadeIn', // jq метод открытия табы
+  jqMethodCloseSpeed: 3000, // скорость закрытия табы
   jqMethodClose: 'hide', // jq метод закрытия табы
   onTab: function () {}, // переключили таб (event, self)
   onMouseover: function () {}, // навели на блок табов (event, self)

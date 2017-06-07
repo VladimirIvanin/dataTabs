@@ -30,7 +30,8 @@ import defaults from './defaults.js';
     self.initElements();
     self.initBinds();
 
-    if (self.options.initOpenTab) {
+    var isLastElement = self.options.indexElement == self.counterElements;
+    if (self.options.initOpenTab && isLastElement) {
       self.initTabs(self, self.options.activeIndex);
     }
 
@@ -71,6 +72,7 @@ import defaults from './defaults.js';
     if (options === undefined || typeof options === 'object') {
       return this.each(function (index, el) {
         if (!$.data(this, 'datatabs')) {
+          options.indexElement = index + 1;
           $.data(this, 'datatabs', new DataTabs( this, options ));
         }
       });

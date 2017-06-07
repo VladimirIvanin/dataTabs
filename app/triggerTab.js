@@ -21,7 +21,7 @@ export default function triggerTab(self, index) {
     $targets.removeClass( options.classes.activeTab ).addClass( options.classes.closeTab );
 
     if (options.useJqMethods && options.jqMethodOpen && options.jqMethodClose) {
-      $targets[options.jqMethodClose]();
+      $targets[options.jqMethodClose](options.jqMethodCloseSpeed);
     }
   }else{
     $anchors.removeClass( options.classes.activeButton ).addClass( options.classes.closeButton );
@@ -32,8 +32,8 @@ export default function triggerTab(self, index) {
     $target.removeClass( options.classes.closeTab ).addClass( options.classes.activeTab );
 
     if (options.useJqMethods && options.jqMethodOpen && options.jqMethodClose) {
-      $targets[options.jqMethodClose]();
-      $target[options.jqMethodOpen]();
+      $targets[options.jqMethodClose](options.jqMethodCloseSpeed);
+      $target[options.jqMethodOpen](options.jqMethodOpenSpeed);
     }
 
     self.states.activeIndex = $anchor.index();
