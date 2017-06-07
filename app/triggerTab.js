@@ -14,14 +14,17 @@ export default function triggerTab(self, index) {
     $target = self.$box.find( '[data-' + self.options.controls.target + '="' + $anchor.data(self.options.controls.anchor) + '"]' );
   }
 
-  var isActive = $anchor.hasClass( options.classes.activeButton ) || $target.is(':visible') || $target.hasClass( options.classes.activeTab );
+  var isActive = $anchor.hasClass( options.classes.activeButton ) && $target.is(':visible') && $target.hasClass( options.classes.activeTab );
 
-  if (isActive  && options.useToggle) {
-    $anchors.removeClass( options.classes.activeButton ).addClass( options.classes.closeButton );
-    $targets.removeClass( options.classes.activeTab ).addClass( options.classes.closeTab );
+  // только если активный, (isActive && options.useToggle) вызывает моргание
+  if (isActive) {
+    if (options.useToggle) {
+      $anchors.removeClass( options.classes.activeButton ).addClass( options.classes.closeButton );
+      $targets.removeClass( options.classes.activeTab ).addClass( options.classes.closeTab );
 
-    if (options.useJqMethods && options.jqMethodOpen && options.jqMethodClose) {
-      $targets[options.jqMethodClose](options.jqMethodCloseSpeed);
+      if (options.useJqMethods && options.jqMethodOpen && options.jqMethodClose) {
+        $targets[options.jqMethodClose](options.jqMethodCloseSpeed);
+      }
     }
   }else{
     $anchors.removeClass( options.classes.activeButton ).addClass( options.classes.closeButton );
