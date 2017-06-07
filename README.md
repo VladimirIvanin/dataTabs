@@ -3,7 +3,7 @@
 ## CDN
 
 ```
-  <script src="https://cdn.jsdelivr.net/gh/VladimirIvanin/dataTabs@0.1.0/dist/dataTabs.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/VladimirIvanin/dataTabs@0.2.0/dist/dataTabs.js"></script>
 ```
 
 | Параметр        | Тип      | Значение поумолчанию                                                                                                                                | Описание                                                                                 |
