@@ -2,7 +2,7 @@
   "name": "datatabs",
   "version": "0.1.0",
   "description": "jQuery tabs",
-  "main": "dist/datatabs.js",
+  "main": "dist/dataTabs.js",
   "scripts": {
     "start": "webpack-dev-server --config webpack.config.js",
     "build": "webpack --config webpack.config.js",
