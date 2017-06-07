@@ -39,6 +39,8 @@
 
 ## Пример
 
+[Онлайн пример на codepen.io](https://codepen.io/brainmurder/pen/jwPoMB)
+
 ```
 <div class="js-tabs">
   <div>
