@@ -1,8 +1,13 @@
 import autoSwitching from './autoSwitching.js';
 import triggerTab from './triggerTab.js';
 import initTabs from './initTabs.js';
-import initElements from './initElements.js';
-import { binding } from './binding.js';
+import {initElements, initSwitchers} from './initElements.js';
+import {  binding,
+          bindSwitchers,
+          bindTriggers,
+          bindHover,
+          hideOnClosest
+        } from './binding.js';
 import defaults from './defaults.js';
 
 ;(function ( $, window, undefined ) {
@@ -31,7 +36,7 @@ import defaults from './defaults.js';
     }
 
     self.initElements();
-    self.initBinds();
+    bindTriggers(self);
 
     var isLastElement = self.options.indexElement == self.counterElements;
     if (self.options.initOpenTab && isLastElement) {
@@ -43,6 +48,10 @@ import defaults from './defaults.js';
     }
 
     if (isLastElement) {
+      initSwitchers(self);
+      bindSwitchers(self);
+      bindHover(self);
+      hideOnClosest(self);
       self.options.onInit(self);
     }
 

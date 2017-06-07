@@ -1,10 +1,13 @@
 const defaults = {
   event: 'click',
+  switchersEvent: 'click', // event переключателей вперед/назад
   controls: {
     'control': 'tab-control',
     'anchor': 'tab-anchor',
     'box': 'tab-box',
-    'target': 'tab-target'
+    'target': 'tab-target',
+    'next': 'tab-next',
+    'prev': 'tab-prev'
   },
   activeIndex: 1, // активный элемент
   speedSwitching: 10000, // скорость авто переключения
@@ -13,6 +16,7 @@ const defaults = {
   hideOnClosest: true, // hide on closest
   prevent: true, // preventDefault
   useJqMethods: true, // использовать jq методы анимаций?
+  loop: true, // замкнуть цикл при переключении?
   initOpenTab: true, // инициализировать активный таб?
   pauseVideoAudio: true, // ставить на паузу аудио и видео при переключении табов?
   state: 'tab', // роль плагина tab/accordion
@@ -26,11 +30,18 @@ const defaults = {
   onMouseout: function () {}, // убрали курсор с блока табов (event, self)
   classes: {
     hover: 'is-data-tabs-hover',
+    disabledSwitcher: 'is-switcher-disabled',
+    disabledButton: 'is-button-disabled',
     activeButton: 'is-button-active',
     closeButton: 'is-button-close',
     activeTab: 'is-tab-active',
     closeTab: 'is-tab-close'
   }
 };
+
+/**
+ * global events
+ * datatabs:update - обновление табов (переход в новое состояние)
+ */
 
 export default defaults;

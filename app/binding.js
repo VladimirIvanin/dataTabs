@@ -2,20 +2,87 @@
 
 import triggerTab from './triggerTab.js';
 
-export function binding () {
-  const self = this;
+/**
+ * Кнопки вперед/назад
+ */
+export function bindSwitchers(self) {
+  const options = self.options;
+  let stopIndex = self.counterElements - 1;
 
-  bindHover(self);
+  if (self.$next) {
+    $(document).on('datatabs:update', function(event) {
+      let nextStatus = getStatusNext(self, stopIndex);
 
-  hideOnClosest(self);
+      if (nextStatus.isNext) {
+        self.$next.removeClass(options.classes.disabledSwitcher);
+      }else{
+        self.$next.addClass(options.classes.disabledSwitcher);
+      }
+    });
 
-  bindTriggers(self);
+    self.$next.on(options.switchersEvent, function(event) {
+      event.preventDefault();
+      let nextStatus = getStatusNext(self, stopIndex);
+
+      if (nextStatus.isNext) {
+        triggerTab(self, nextStatus.next);
+      }
+    });
+  }
+
+  if (self.$prev) {
+    $(document).on('datatabs:update', function(event) {
+      let prevStatus = getStatusPrev(self, stopIndex);
+
+      if (prevStatus.isPrev) {
+        self.$prev.removeClass(options.classes.disabledSwitcher);
+      }else{
+        self.$prev.addClass(options.classes.disabledSwitcher);
+      }
+    });
+
+    self.$prev.on(options.switchersEvent, function(event) {
+      event.preventDefault();
+      let prevStatus = getStatusPrev(self, stopIndex);
+
+      if (prevStatus.isPrev) {
+        triggerTab(self, prevStatus.prev);
+      }
+    });
+  }
 }
 
+function getStatusNext(self, stopIndex) {
+  let next = self.states.activeIndex + 1;
+  let isNext = true; // разрешен следующий?
+  if (next > stopIndex) {
+    if(self.options.loop){
+      next = 0;
+    }else{
+      isNext = false;
+    }
+  };
+
+  return {next,isNext}
+}
+
+function getStatusPrev(self, stopIndex) {
+  let prev = self.states.activeIndex - 1;
+  let isPrev = true; // разрешен предыдущий?
+  if (prev < 0) {
+    if(self.options.loop){
+      prev = stopIndex;
+    }else{
+      isPrev = false;
+    }
+  };
+
+  return {prev,isPrev}
+}
 /**
  * Отслеживаем переключение
  */
-function bindTriggers(self) {
+export function bindTriggers(self) {
   const options = self.options;
 
   self.$element.on(options.event, function(event) {
@@ -23,8 +90,6 @@ function bindTriggers(self) {
       event.preventDefault();
     }
     const dataId = self.options.controls.anchor;
-
-    options.onTab(event, self);
 
     let _index = 0;
     self.$box.find( '[data-' + dataId + ']' ).each(function(index, el) {
@@ -42,7 +107,7 @@ function bindTriggers(self) {
 /**
  * Закрывать контент при клике на поле вне табов?
  */
-function hideOnClosest(self) {
+export function hideOnClosest(self) {
   if (!self.options.hideOnClosest) {
     return;
   }
@@ -87,7 +152,7 @@ function hideOnClosest(self) {
 /**
  * Ставим класс родительскому элементу при наведении
  */
-function bindHover(self) {
+export function bindHover(self) {
   const options = self.options;
   const $parentTabs = $(options.$parent);
   const $parentInstance = $parentTabs.get(0).dataTabs;

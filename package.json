@@ -1,6 +1,6 @@
 {
   "name": "datatabs",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "jQuery tabs",
   "main": "dist/dataTabs.js",
   "scripts": {
@@ -18,10 +18,8 @@
     "url": "https://github.com/VladimirIvanin/dataTabs/issues"
   },
   "homepage": "https://github.com/VladimirIvanin/dataTabs#readme",
-  "devDependencies": {
-    "webpack": "^2.6.1"
-  },
   "dependencies": {
+    "webpack": "^2.6.1",
     "babel": "^6.23.0",
     "babel-core": "^6.24.1",
     "babel-loader": "^7.0.0",

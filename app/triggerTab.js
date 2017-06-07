@@ -8,6 +8,12 @@ export default function triggerTab(self, index) {
   let $targets = self.$targets;
   let $anchors = self.$anchors;
 
+  // если передали больше чем есть кнопок
+  let _stopIndex = self.counterElements - 1;
+  if (index > _stopIndex) {
+    index = _stopIndex;
+  }
+
   if (Number.isInteger(index)) {
     $anchor = self.$box.find( '[data-' + self.options.controls.anchor + ']' ).eq(index);
 
@@ -39,7 +45,13 @@ export default function triggerTab(self, index) {
       $target[options.jqMethodOpen](options.jqMethodOpenSpeed);
     }
 
-    self.states.activeIndex = $anchor.index();
+    // Активный индекс элемента в html коллекции кнопок.
+    self.states.activeIndex = index;
+
+    self.options.onTab(event, self);
+
+    // обновление табов
+    $( document ).trigger( "datatabs:update", [{"dataTabs": self}] );
 
     var $swiper = $target.find('.swiper-container');
     updateSwiper($swiper);
