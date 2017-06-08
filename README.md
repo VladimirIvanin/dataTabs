@@ -51,7 +51,7 @@
 
 [Онлайн пример переключения по наведению курсора на codepen.io.](https://codepen.io/brainmurder/pen/RgWbxw)
 
-```
+```html
 <!-- Для инициализации плагина используется селектор контейнера (data-tabs-container). В данном случае это $('.js-tabs') -->
 <div class="js-tabs" data-tabs-container>
   <div>
