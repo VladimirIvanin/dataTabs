@@ -2,6 +2,7 @@ const defaults = {
   event: 'click',
   switchersEvent: 'click', // event переключателей вперед/назад
   controls: {
+    'container': 'tabs-container',
     'control': 'tab-control',
     'anchor': 'tab-anchor',
     'box': 'tab-box',
@@ -10,9 +11,8 @@ const defaults = {
     'prev': 'tab-prev'
   },
   activeIndex: 1, // активный элемент
-  speedSwitching: 10000, // скорость авто переключения
+  speedSwitching: 5000, // скорость авто переключения
   autoSwitching: false, // авто переключение
-  parent: false, // parent selector "string"
   hideOnClosest: false, // hide on closest
   prevent: true, // preventDefault
   useJqMethods: true, // использовать jq методы анимаций?

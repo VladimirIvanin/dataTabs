@@ -3,7 +3,7 @@
 export default function triggerTab(self, index) {
   const options = self.options;
   let $anchor = self.$element;
-  let $target = self.$target;
+  let $target = null;
 
   let $targets = self.$targets;
   let $anchors = self.$anchors;
@@ -14,11 +14,18 @@ export default function triggerTab(self, index) {
     index = _stopIndex;
   }
 
-  if (Number.isInteger(index)) {
-    $anchor = self.$box.find( '[data-' + self.options.controls.anchor + ']' ).eq(index);
 
-    $target = self.$box.find( '[data-' + self.options.controls.target + '="' + $anchor.data(self.options.controls.anchor) + '"]' );
+
+  if (Number.isInteger(index)) {
+    $anchor = $anchors.eq(index);
+    if ($anchor.get(0).dataTabs && $anchor.get(0).dataTabs.$target) {
+      $target = $anchor.get(0).dataTabs['$target'];
+    }else{
+      console.warn('Для кнопки не назначен контент!', $anchor);
+      return;
+    }
   }
+
 
   var isActive = $anchor.hasClass( options.classes.activeButton ) && $target.is(':visible') && $target.hasClass( options.classes.activeTab );
 
@@ -50,7 +57,7 @@ export default function triggerTab(self, index) {
     // колбек обновления
     self.options.onTab(event, self);
 
-    const main_uuid = $(self.options.$parent).get(0).dataTabs.uuid;
+    const main_uuid = self.$element.get(0).dataTabs.uuid;
     // обновление табов (глобальный евент)
     $( document ).trigger( "datatabs:update", [main_uuid] );
 

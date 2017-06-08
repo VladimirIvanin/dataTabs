@@ -3,7 +3,7 @@
 ## CDN
 
 ```
-  <script src="https://cdn.jsdelivr.net/gh/VladimirIvanin/dataTabs@0.5.0/dist/dataTabs.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/VladimirIvanin/dataTabs@0.6.0/dist/dataTabs.js"></script>
 ```
 
 ## Настройки
@@ -17,7 +17,6 @@
 | activeIndex          | number   | 1                                                                                                                                                   | Активный элемент                                                                         |
 | autoSwitching   | boolean  | false                                                                                                                                               | Авто переключение                                                                        |
 | speedSwitching  | number   | 10000                                                                                                                                               | скорость авто переключения                                                               |
-| parent          | string   | -                                                                                                                                                   | Селектор родительского DOM элемента для переключателей и содержимого табов               |
 | hideOnClosest   | boolean  | false                                                                                                                                                | Закрыть содержимое при клике вне родительского DOM элемента (активно в режиме accordion) |
 | useJqMethods    | boolean  | true                                                                                                                                                | Использовать jQuery методы анимаций?                                                     |
 | jqMethodOpen    | string   | fadeIn                                                                                                                                              | jQuery метод открытия                                                                    |
@@ -34,13 +33,15 @@
 
 Вместо привычных `href="#target"/id="target"` для связки переключателей и блоков иcпользуются data атрибуты.
 
+`data-tabs-container` - дата атрибут контейнера.
+
 `data-tab-anchor` - дата атрибут переключателей.
 
 `data-tab-target` - дата атрибут блоков содержимого.
 
 > Значения атрибутов переключателей и блоков содержимого должны быть идентичны
 
-> Не указывая `parent` следует использовать следущие вложенности: Родительский контейнер > Контейнер переключателей > Переключатель, Родительский контейнер > Контейнер блоков содержимого > блок содержимого
+> Все data атрибуты *обязательны*!
 
 ## Пример
 
@@ -51,7 +52,7 @@
 [Онлайн пример переключения по наведению курсора на codepen.io.](https://codepen.io/brainmurder/pen/RgWbxw)
 
 ```
-<div class="js-tabs">
+<div class="js-tabs" data-tabs-container>
   <div>
     <button data-tab-anchor="1" type="button" name="button" class="js-tabs-item">
       Первая вкладка
@@ -74,10 +75,5 @@
 ```
 
 ```js
-$('.js-tabs-item').dataTabs({
-  event: 'click',
-  parent: '.js-tabs',
-  jqMethodOpen: 'fadeIn',
-  jqMethodClose: 'hide'
-});
+$('.js-tabs').dataTabs();
 ```

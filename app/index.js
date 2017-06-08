@@ -1,7 +1,6 @@
 import autoSwitching from './autoSwitching.js';
 import triggerTab from './triggerTab.js';
 import initTabs from './initTabs.js';
-import generateUUID from './generateUUID.js';
 import {initElements, initSwitchers} from './initElements.js';
 import {  binding,
           bindSwitchers,
@@ -24,6 +23,16 @@ import defaults from './defaults.js';
     this.init();
   }
 
+  DataTabs.prototype.initElements = initElements;
+  DataTabs.prototype.initTabs = initTabs;
+  DataTabs.prototype.initAutoSwitching = autoSwitching;
+  DataTabs.prototype.initBinds = binding;
+  DataTabs.prototype.initSwitchers = initSwitchers;
+  DataTabs.prototype.bindSwitchers = bindSwitchers;
+  DataTabs.prototype.bindTriggers = bindTriggers;
+  DataTabs.prototype.bindHover = bindHover;
+  DataTabs.prototype.hideOnClosest = hideOnClosest;
+
 
   DataTabs.prototype.init = function () {
     var self = this;
@@ -31,26 +40,20 @@ import defaults from './defaults.js';
     if (self.options.state == 'accordion') {
       // можно переключать состояние активного элемента
       self.options.useToggle = true;
+      // при аккордеоне скорость закрытия == открытию при дефолтных настройках
       if (self.options.jqMethodCloseSpeed == 0) {
         self.options.jqMethodCloseSpeed = self.options.jqMethodOpenSpeed;
       }
     }
 
     self.initElements();
-    bindTriggers(self);
+    self.initSwitchers();
+    self.bindSwitchers();
+    self.bindTriggers();
+    self.bindHover();
+    self.hideOnClosest();
 
-    var isLastElement = self.options.indexElement == self.counterElements;
-
-    if (isLastElement) {
-      initSwitchers(self);
-      bindSwitchers(self);
-      bindHover(self);
-      hideOnClosest(self);
-      $(self.options.$parent).get(0).dataTabs.uuid = generateUUID();
-      self.options.onInit(self);
-    }
-
-    if (self.options.initOpenTab && isLastElement) {
+    if (self.options.initOpenTab) {
       self.initTabs(self, self.options.activeIndex);
     }
 
@@ -58,27 +61,7 @@ import defaults from './defaults.js';
       self.initAutoSwitching();
     }
 
-  }
-
-  DataTabs.prototype.initElements = initElements;
-  DataTabs.prototype.initTabs = initTabs;
-  DataTabs.prototype.initAutoSwitching = autoSwitching;
-  DataTabs.prototype.initBinds = binding;
-
-  /**
-  * Проверить инициализирован ли плагин
-  */
-  function _checkInitInstance(_self) {
-    if (_self && _self.className) {
-      var $selector = '.' + _self.className.trim().replace(/\s/g, '.');
-      $(window).on('load', function(event) {
-        $(document).on('click', $selector, function(event) {
-          if (!$.data(this, 'datatabs')) {
-            console.warn('Проверьте порядок инициализации dataTabs!');
-          }
-        });
-      });
-    }
+    self.options.onInit(self);
   }
 
   $.fn.dataTabs = function ( _options ) {
@@ -86,12 +69,9 @@ import defaults from './defaults.js';
     var instance;
     var options = _options || {};
 
-    _checkInitInstance($(this)[0])
-
     if (options === undefined || typeof options === 'object') {
       return this.each(function (index, el) {
         if (!$.data(this, 'datatabs')) {
-          options.indexElement = index + 1;
           $.data(this, 'datatabs', new DataTabs( this, options ));
         }
       });

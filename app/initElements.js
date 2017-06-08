@@ -1,71 +1,79 @@
 'use strict';
+import generateUUID from './generateUUID.js';
 
 export function initElements () {
   const self = this;
   const options = self.options;
+  const anchorSelector = getDataAttrName(options.controls.anchor);
+  const targetSelector = getDataAttrName(options.controls.target);
+  const containerSelector = getDataAttrName(options.controls.container);
 
-  options.parents = self.$element.parents().not('body, html');
+  if (!self.$element.get(0).dataTabs) {
+    self.$element.get(0).dataTabs = {};
+    self.$element.get(0).dataTabs.list = [];
+  }
 
-  // Установка родительского блока
-  if (options.parent) {
-    options.$parent = self.$element.parents(options.parent + ':first');
-    if (options.$parent.length == 0) {
-      options.$parent = options.parents[2] || options.parents[1] || options.parents[0];
+  self.$element.get(0).dataTabs.instance = self;
+  self.$element.get(0).dataTabs.uuid = generateUUID();
+
+  const main_uuid = self.$element.get(0).dataTabs.uuid;
+
+  // все контролы
+  // нельзя вкладывать контролы внутрь контента
+  self.$anchors = self.$element.find( anchorSelector ).filter(function( index, el ) {
+    let isMain = false;
+    const $parent = $(el).parents( containerSelector ).get(0);
+    if ($parent && $parent.dataTabs && $parent.dataTabs.uuid) {
+      isMain = $parent.dataTabs.uuid == main_uuid;
     }
-  }else{
-    options.$parent = options.parents[2] || options.parents[1] || options.parents[0];
-  }
+
+    return isMain;
+  });
+
+  // весь контент
+  self.$targets = self.$element.find( targetSelector ).filter(function( index, el ) {
+    let isMain = false;
+    const $parent = $(el).parents( containerSelector ).get(0);
+    if ($parent && $parent.dataTabs && $parent.dataTabs.uuid) {
+      isMain = $parent.dataTabs.uuid == main_uuid;
+    }
+
+    return isMain;
+  });
 
 
-  self.isDataAnchors = self.$element.is(getDataAttrName(self.options.controls.anchor));
-  self.isIdAnchors = self.$element.is('[href]');
+  self.$anchors.each(function(index, el) {
+    const anchorId = $(el).data( options.controls.anchor );
+    const targetSearch = getDataAttrName(options.controls.target, anchorId);
+    const anchor = $(el).get(0);
+    if (!anchor.dataTabs) {
+      anchor.dataTabs = {};
+    }
 
-  if (!self.isDataAnchors) {
-    console.warn('Не установлены дата атрибуты!', getDataAttrName(self.options.controls.anchor));
-  }
+    anchor.dataTabs.myIndex = index;
+    anchor.dataTabs.$target = null;
 
-  // если блок контролов не указан через дата атрибуты, берется родительский блок
-  self.$controls = self.$element.parents( getDataAttrName(self.options.controls.control) + ':first' );
+    // Присвоить кнопкам блок контента
+    self.$targets.each(function(index, elem) {
+      if ($(elem).is(targetSearch)) {
+        $(el).get(0).dataTabs.$target = $(elem);
+      }
+    });
 
-  if (self.$controls.length == 0) {
-    self.$controls = $(self.options.$parent);
-  }
+    if (!$(el).get(0).dataTabs.$target) {
+      console.warn('Для кнопки не назначен контент!', $(el));
+    }
+  });
 
-  // найти все контролы
-  self.$anchors = self.$controls.find( getDataAttrName(self.options.controls.anchor) );
-
-  // найти родителькский элемент контента
-  self.$box = $( getDataAttrName(self.options.controls.box, self.$controls.data(self.options.controls.control) ) );
-
-  //  если блок контента не указан через дата атрибуты, берется родительский блок
-  if (self.$box.length == 0) {
-    self.$box = $(self.options.$parent);
-  }
-
-  // найти все блоки контента
-  self.$targets = self.$box.find( getDataAttrName(self.options.controls.target) );
-
-  // блок контента привязанный к контролу
-  self.$target = self.$box.find( getDataAttrName(self.options.controls.target, self.$element.data(self.options.controls.anchor) ) );
-
-  // кол-во переключателей
-  self.counterElements = self.$anchors.length
-
-  if (!$(self.options.$parent).get(0).dataTabs) {
-    $(self.options.$parent).get(0).dataTabs = {};
-    $(self.options.$parent).get(0).dataTabs.list = [];
-  }
-
-  // родительский блок хранит инстансы кнопок
-  $(self.options.$parent).get(0).dataTabs.list.push(self);
-
+  self.counterElements = self.$anchors.length;
 }
 
-export function initSwitchers(self) {
+export function initSwitchers() {
+  const self = this;
   // переключатель на следующий элемент
-  self.$next = $(self.options.$parent).find( getDataAttrName(self.options.controls.next) );
+  self.$next = self.$element.find( getDataAttrName(self.options.controls.next) );
   // переключатель на предыдущий элемент
-  self.$prev = $(self.options.$parent).find( getDataAttrName(self.options.controls.prev) );
+  self.$prev = self.$element.find( getDataAttrName(self.options.controls.prev) );
 }
 
 function getDataAttrName(name, value) {

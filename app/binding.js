@@ -5,13 +5,14 @@ import triggerTab from './triggerTab.js';
 /**
  * Кнопки вперед/назад
  */
-export function bindSwitchers(self) {
+export function bindSwitchers() {
+  const self = this;
   const options = self.options;
   let stopIndex = self.counterElements - 1;
 
   if (self.$next) {
     $(document).on('datatabs:update', function(event, uuid) {
-      const mainId = $(self.options.$parent).get(0).dataTabs.uuid;
+      const mainId = self.$element.get(0).dataTabs.uuid;
       if (uuid == mainId) {
         let nextStatus = getStatusNext(self, stopIndex);
 
@@ -35,7 +36,7 @@ export function bindSwitchers(self) {
 
   if (self.$prev) {
     $(document).on('datatabs:update', function(event, uuid) {
-      const mainId = $(self.options.$parent).get(0).dataTabs.uuid;
+      const mainId = self.$element.get(0).dataTabs.uuid;
       if (uuid == mainId) {
         let prevStatus = getStatusPrev(self, stopIndex);
 
@@ -88,24 +89,20 @@ function getStatusPrev(self, stopIndex) {
 /**
  * Отслеживаем переключение
  */
-export function bindTriggers(self) {
+export function bindTriggers() {
+  const self = this;
   const options = self.options;
 
-  self.$element.on(options.event, function(event) {
+  self.$anchors.on(options.event, function(event) {
     if (options.prevent) {
       event.preventDefault();
     }
+
+    const anchor = $(this).get(0);
+
     const dataId = self.options.controls.anchor;
 
-    let _index = 0;
-    self.$box.find( '[data-' + dataId + ']' ).each(function(index, el) {
-      var _id = $(el).data(dataId);
-      if (_id == self.$element.data(dataId)) {
-        _index = index;
-      }
-    });
-
-    triggerTab(self, _index)
+    triggerTab(self, anchor.dataTabs.myIndex)
 
   });
 }
@@ -113,23 +110,14 @@ export function bindTriggers(self) {
 /**
  * Закрывать контент при клике на поле вне табов?
  */
-export function hideOnClosest(self) {
+export function hideOnClosest() {
+  const self = this;
   if (!self.options.hideOnClosest) {
     return;
   }
 
-  const $parentTabs = $(self.options.$parent);
-  const $parentInstance = $parentTabs.get(0).dataTabs;
-  let isHideOnClosest = $parentInstance.hideOnClosest;
-
-  if (isHideOnClosest) {
-    return;
-  }
-
-  $parentInstance.hideOnClosest = true;
-
   $(document).on('click', function(event) {
-    const $parent = $(event.target).closest( self.options.$parent );
+    const $parent = $(event.target).closest( self.$element );
     const isClose = $parent.length == 0;
     const isCloseOnJquery = (isClose && self.options.useJqMethods && self.options.jqMethodClose);
     const closeAll = self.options.useToggle;
@@ -158,17 +146,10 @@ export function hideOnClosest(self) {
 /**
  * Ставим класс родительскому элементу при наведении
  */
-export function bindHover(self) {
+export function bindHover() {
+  const self = this;
   const options = self.options;
-  const $parentTabs = $(options.$parent);
-  const $parentInstance = $parentTabs.get(0).dataTabs;
-  let bindHover = $parentInstance.bindHover;
-
-  if (bindHover) {
-    return;
-  }
-
-  bindHover = true;
+  const $parentTabs = self.$element;
 
   $parentTabs.hover((event) => {
     $parentTabs.addClass(options.classes.hover);
