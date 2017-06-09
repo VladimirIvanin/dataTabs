@@ -1,4 +1,5 @@
 'use strict';
+import logger from './logger.js';
 
 export default function triggerTab(self, index) {
   const options = self.options;
@@ -14,21 +15,23 @@ export default function triggerTab(self, index) {
     index = _stopIndex;
   }
 
-
-
   if (Number.isInteger(index)) {
     $anchor = $anchors.eq(index);
-    if ($anchor.get(0).dataTabs && $anchor.get(0).dataTabs.$target) {
-      $target = $anchor.get(0).dataTabs['$target'];
+    if ($anchor.get(0) && $anchor.get(0).dataTabs && $anchor.get(0).dataTabs.$target) {
+      $target = $anchor.get(0).dataTabs.$target;
     }else{
       console.warn('Для кнопки не назначен контент!', $anchor);
       return;
     }
   }
 
+  logger(self.options, 'triggerTab:index', index);
+  logger(self.options, 'triggerTab:$anchor', $anchor);
+
 
   var isActive = $anchor.hasClass( options.classes.activeButton ) && $target.is(':visible') && $target.hasClass( options.classes.activeTab );
 
+  logger(self.options, 'triggerTab:isActive', isActive);
   // только если активный, (isActive && options.useToggle) вызывает моргание
   if (isActive) {
     if (options.useToggle) {

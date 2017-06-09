@@ -23,17 +23,6 @@ import defaults from './defaults.js';
     this.init();
   }
 
-  DataTabs.prototype.initElements = initElements;
-  DataTabs.prototype.initTabs = initTabs;
-  DataTabs.prototype.initAutoSwitching = autoSwitching;
-  DataTabs.prototype.initBinds = binding;
-  DataTabs.prototype.initSwitchers = initSwitchers;
-  DataTabs.prototype.bindSwitchers = bindSwitchers;
-  DataTabs.prototype.bindTriggers = bindTriggers;
-  DataTabs.prototype.bindHover = bindHover;
-  DataTabs.prototype.hideOnClosest = hideOnClosest;
-
-
   DataTabs.prototype.init = function () {
     var self = this;
 
@@ -63,6 +52,16 @@ import defaults from './defaults.js';
 
     self.options.onInit(self);
   }
+
+  DataTabs.prototype.initElements = initElements;
+  DataTabs.prototype.initTabs = initTabs;
+  DataTabs.prototype.initAutoSwitching = autoSwitching;
+  DataTabs.prototype.initBinds = binding;
+  DataTabs.prototype.initSwitchers = initSwitchers;
+  DataTabs.prototype.bindSwitchers = bindSwitchers;
+  DataTabs.prototype.bindTriggers = bindTriggers;
+  DataTabs.prototype.bindHover = bindHover;
+  DataTabs.prototype.hideOnClosest = hideOnClosest;
 
   $.fn.dataTabs = function ( _options ) {
     var args = arguments;

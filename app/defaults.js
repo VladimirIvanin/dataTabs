@@ -15,6 +15,7 @@ const defaults = {
   autoSwitching: false, // авто переключение
   hideOnClosest: false, // hide on closest
   prevent: true, // preventDefault
+  debug: false, // дебагер
   useJqMethods: true, // использовать jq методы анимаций?
   loop: false, // замкнуть цикл при переключении?
   initOpenTab: true, // инициализировать активный таб?

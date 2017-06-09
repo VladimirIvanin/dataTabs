@@ -1,5 +1,6 @@
 'use strict';
 import generateUUID from './generateUUID.js';
+import logger from './logger.js';
 
 export function initElements () {
   const self = this;
@@ -8,6 +9,11 @@ export function initElements () {
   const targetSelector = getDataAttrName(options.controls.target);
   const containerSelector = getDataAttrName(options.controls.container);
 
+  if (!self.$element.is(containerSelector)) {
+    console.warn('Не указан контейнер для блока табов: ' + containerSelector);
+    self.$element.attr('data-'+options.controls.container, '')
+  }
+
   if (!self.$element.get(0).dataTabs) {
     self.$element.get(0).dataTabs = {};
     self.$element.get(0).dataTabs.list = [];
@@ -15,6 +21,8 @@ export function initElements () {
 
   self.$element.get(0).dataTabs.instance = self;
   self.$element.get(0).dataTabs.uuid = generateUUID();
+
+  logger(self.options, 'self.$element.get(0).dataTabs', self.$element.get(0).dataTabs);
 
   const main_uuid = self.$element.get(0).dataTabs.uuid;
 
@@ -30,6 +38,8 @@ export function initElements () {
     return isMain;
   });
 
+  logger(self.options, 'self.$anchors', self.$anchors);
+
   // весь контент
   self.$targets = self.$element.find( targetSelector ).filter(function( index, el ) {
     let isMain = false;
@@ -41,6 +51,7 @@ export function initElements () {
     return isMain;
   });
 
+  logger(self.options, 'self.$targets', self.$targets);
 
   self.$anchors.each(function(index, el) {
     const anchorId = $(el).data( options.controls.anchor );
@@ -59,6 +70,8 @@ export function initElements () {
         $(el).get(0).dataTabs.$target = $(elem);
       }
     });
+
+    logger(self.options, 'anchor.dataTabs', anchor.dataTabs);
 
     if (!$(el).get(0).dataTabs.$target) {
       console.warn('Для кнопки не назначен контент!', $(el));
