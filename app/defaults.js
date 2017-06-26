@@ -26,7 +26,7 @@ const defaults = {
   jqMethodCloseSpeed: 0, // скорость закрытия табы
   jqMethodClose: 'hide', // jq метод закрытия табы
   onInit: function () {}, // плагин инициализировался (onInit)
-  onTab: function () {}, // переключили таб (event, self)
+  onTab: function () {}, // переключили таб (self)
   onMouseover: function () {}, // навели на блок табов (event, self)
   onMouseout: function () {}, // убрали курсор с блока табов (event, self)
   classes: {

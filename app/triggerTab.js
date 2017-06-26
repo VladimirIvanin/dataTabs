@@ -58,7 +58,7 @@ export default function triggerTab(self, index) {
     self.states.activeIndex = index;
 
     // колбек обновления
-    self.options.onTab(event, self);
+    self.options.onTab(self);
 
     const main_uuid = self.$element.get(0).dataTabs.uuid;
     // обновление табов (глобальный евент)
