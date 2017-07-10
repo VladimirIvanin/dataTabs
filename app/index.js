@@ -20,13 +20,15 @@ import defaults from './defaults.js';
 
     this.options = $.extend(true, {}, defaults, options);
 
-    this.init();
+    this.init(options);
   }
 
-  DataTabs.prototype.init = function () {
+  DataTabs.prototype.init = function (options) {
     var self = this;
 
     if (self.options.state == 'accordion') {
+      // в state == 'accordion' activeIndex = null;
+      self.options.activeIndex = options.activeIndex || null;
       // можно переключать состояние активного элемента
       self.options.useToggle = true;
       // при аккордеоне скорость закрытия == открытию при дефолтных настройках
@@ -42,7 +44,7 @@ import defaults from './defaults.js';
     self.bindHover();
     self.hideOnClosest();
 
-    if (self.options.initOpenTab) {
+    if (self.options.initOpenTab && self.options.activeIndex) {
       self.initTabs(self, self.options.activeIndex);
     }
 

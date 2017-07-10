@@ -3,7 +3,7 @@
 ## CDN
 
 ```
-  <script src="https://cdn.jsdelivr.net/gh/VladimirIvanin/dataTabs@0.7.1/dist/dataTabs.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/VladimirIvanin/dataTabs@0.8.0/dist/dataTabs.js"></script>
 ```
 
 ## Настройки
@@ -38,6 +38,8 @@
 * `data-tab-anchor` - дата атрибут переключателей.
 
 * `data-tab-target` - дата атрибут блоков содержимого.
+
+* `data-tab-active` - дата атрибут активного элемента. В state == 'accordion' activeIndex = null;
 
 > Значения атрибутов переключателей и блоков содержимого должны быть идентичны
 

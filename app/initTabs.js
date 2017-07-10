@@ -2,12 +2,23 @@
 import triggerTab from './triggerTab.js';
 
 export default function initTabs (self, activeIndex) {
-  let _activeTab = --activeIndex;
+  const isNumber = $.isNumeric(activeIndex);
+  const isArray = Array.isArray(activeIndex);
 
-  if (_activeTab < 0) {
-    _activeTab = 0;
+  if (isNumber) {
+    let _activeTab = --activeIndex;
+
+    if (_activeTab < 0) {
+      _activeTab = 0;
+    }
+
+    triggerTab(self, _activeTab);
+  }else{
+    if (isArray) {
+      $.each(activeIndex, function(index, el) {
+        triggerTab(self, el);
+      });
+    }
   }
-
-  triggerTab(self, _activeTab);
 
 }

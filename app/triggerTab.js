@@ -31,6 +31,10 @@ export default function triggerTab(self, index) {
 
   var isActive = $anchor.hasClass( options.classes.activeButton ) && $target.is(':visible') && $target.hasClass( options.classes.activeTab );
 
+  if (!options.initOpenTab) {
+    isActive = $target.is(':visible');
+  }
+
   logger(self.options, 'triggerTab:isActive', isActive);
   // только если активный, (isActive && options.useToggle) вызывает моргание
   if (isActive) {

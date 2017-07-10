@@ -53,6 +53,13 @@ export function initElements () {
 
   logger(self.options, 'self.$targets', self.$targets);
 
+  // Устанавливаем активный таб по дата атрибуту
+  let $activeAnchors = self.$anchors.is('[data-tab-active]');
+
+  if ($activeAnchors === true) {
+    self.options.activeIndex = [];
+  }
+
   self.$anchors.each(function(index, el) {
     const anchorId = $(el).data( options.controls.anchor );
     const targetSearch = getDataAttrName(options.controls.target, anchorId);
@@ -63,6 +70,10 @@ export function initElements () {
 
     anchor.dataTabs.myIndex = index;
     anchor.dataTabs.$target = null;
+
+    if ($(el).is('[data-tab-active]')) {
+      self.options.activeIndex.push(index)
+    }
 
     // Присвоить кнопкам блок контента
     self.$targets.each(function(index, elem) {
