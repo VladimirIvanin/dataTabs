@@ -3,6 +3,7 @@ import logger from './logger.js';
 
 export default function triggerTab(self, index) {
   const options = self.options;
+  const main_uuid = self.$element.get(0).dataTabs.uuid;
   let $anchor = self.$element;
   let $target = null;
 
@@ -16,7 +17,18 @@ export default function triggerTab(self, index) {
   }
 
   if (Number.isInteger(index)) {
-    $anchor = $anchors.eq(index);
+    let _$anchor = $anchors.eq(index);
+    let selector = _$anchor.data(options.controls.anchor);
+    let containerSelector = '[data-' + options.controls.container +']';
+    $anchor = self.$element.find('[data-'+options.controls.anchor+'='+selector+']').filter(function( index, el ) {
+      let isMain = false;
+      const $parent = $(el).parents( containerSelector ).get(0);
+      if ($parent && $parent.dataTabs && $parent.dataTabs.uuid) {
+        isMain = $parent.dataTabs.uuid == main_uuid;
+      }
+
+      return isMain;
+    });
     if ($anchor.get(0) && $anchor.get(0).dataTabs && $anchor.get(0).dataTabs.$target) {
       $target = $anchor.get(0).dataTabs.$target;
     }else{
@@ -64,7 +76,6 @@ export default function triggerTab(self, index) {
     // колбек обновления
     self.options.onTab(self);
 
-    const main_uuid = self.$element.get(0).dataTabs.uuid;
     // обновление табов (глобальный евент)
     $( document ).trigger( "datatabs:update", [main_uuid] );
 
