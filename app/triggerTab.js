@@ -20,7 +20,7 @@ export default function triggerTab(self, index) {
     let _$anchor = $anchors.eq(index);
     let selector = _$anchor.data(options.controls.anchor);
     let containerSelector = '[data-' + options.controls.container +']';
-    $anchor = self.$element.find('[data-'+options.controls.anchor+'='+selector+']').filter(function( index, el ) {
+    $anchor = self.$element.find('[data-'+options.controls.anchor+'="'+selector+'"]').filter(function( index, el ) {
       let isMain = false;
       const $parent = $(el).parents( containerSelector ).get(0);
       if ($parent && $parent.dataTabs && $parent.dataTabs.uuid) {
