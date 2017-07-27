@@ -57,6 +57,25 @@ export default function triggerTab(self, index) {
       if (options.useJqMethods && options.jqMethodOpen && options.jqMethodClose) {
         $targets[options.jqMethodClose](options.jqMethodCloseSpeed);
       }
+
+      // Активный индекс элемента в html коллекции кнопок.
+      self.states.activeIndex = index;
+
+      // колбек обновления
+      self.options.onTab(self, $anchor, $target);
+
+      // обновление табов (глобальный евент)
+      $( document ).trigger( "datatabs:update", [main_uuid] );
+
+      var $swiper = $target.find('.swiper-container');
+      updateSwiper($swiper);
+
+      var $owl = $target.find('.owl-carousel');
+      updateOwl($owl);
+
+      if (options.pauseVideoAudio) {
+        pauseVideoAudio($targets.not(`.${options.classes.activeTab}`))
+      }
     }
   }else{
     $anchors.removeClass( options.classes.activeButton ).addClass( options.classes.closeButton );
