@@ -40,8 +40,8 @@ export default function triggerTab(self, index) {
   logger(self.options, 'triggerTab:index', index);
   logger(self.options, 'triggerTab:$anchor', $anchor);
 
-
   var isActive = $anchor.hasClass( options.classes.activeButton ) && $target.is(':visible') && $target.hasClass( options.classes.activeTab );
+
 
   if (!options.initOpenTab) {
     isActive = $target.is(':visible');
@@ -74,7 +74,7 @@ export default function triggerTab(self, index) {
     self.states.activeIndex = index;
 
     // колбек обновления
-    self.options.onTab(self);
+    self.options.onTab(self, $anchor, $target);
 
     // обновление табов (глобальный евент)
     $( document ).trigger( "datatabs:update", [main_uuid] );
