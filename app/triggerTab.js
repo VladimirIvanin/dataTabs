@@ -48,6 +48,10 @@ export default function triggerTab(self, index) {
   }
 
   logger(self.options, 'triggerTab:isActive', isActive);
+
+  var $swiper = $target.find('.swiper-container');
+  var $owl = $target.find('.owl-carousel');
+
   // только если активный, (isActive && options.useToggle) вызывает моргание
   if (isActive) {
     if (options.useToggle) {
@@ -67,10 +71,9 @@ export default function triggerTab(self, index) {
       // обновление табов (глобальный евент)
       $( document ).trigger( "datatabs:update", [main_uuid] );
 
-      var $swiper = $target.find('.swiper-container');
+
       updateSwiper($swiper);
 
-      var $owl = $target.find('.owl-carousel');
       updateOwl($owl);
 
       if (options.pauseVideoAudio) {
@@ -98,10 +101,8 @@ export default function triggerTab(self, index) {
     // обновление табов (глобальный евент)
     $( document ).trigger( "datatabs:update", [main_uuid] );
 
-    var $swiper = $target.find('.swiper-container');
     updateSwiper($swiper);
 
-    var $owl = $target.find('.owl-carousel');
     updateOwl($owl);
 
     if (options.pauseVideoAudio) {

@@ -1,5 +1,4 @@
 import autoSwitching from './autoSwitching.js';
-import triggerTab from './triggerTab.js';
 import initTabs from './initTabs.js';
 import {initElements, initSwitchers} from './initElements.js';
 import {  binding,
@@ -70,7 +69,7 @@ import defaults from './defaults.js';
     var instance;
     var options = _options || {};
 
-    if (options === undefined || typeof options === 'object') {
+    if (typeof options === 'undefined' || typeof options === 'object') {
       return this.each(function (index, el) {
         if (!$.data(this, 'datatabs')) {
           $.data(this, 'datatabs', new DataTabs( this, options ));

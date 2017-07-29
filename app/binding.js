@@ -100,8 +100,6 @@ export function bindTriggers() {
 
     const anchor = $(this).get(0);
 
-    const dataId = self.options.controls.anchor;
-
     triggerTab(self, anchor.dataTabs.myIndex)
 
   });
