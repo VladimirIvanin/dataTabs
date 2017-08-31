@@ -12,6 +12,7 @@ const defaults = {
   },
   activeIndex: 1, // активный элемент
   speedSwitching: 5000, // скорость авто переключения
+  useToggle: false, // Скрытие активных вкладок
   autoSwitching: false, // авто переключение
   hideOnClosest: false, // hide on closest
   prevent: true, // preventDefault

@@ -14,10 +14,10 @@ import defaults from './defaults.js';
   function DataTabs(element, options) {
     this.element = element;
     this.$element = $(element);
-
     this.states = {};
+    var dataParams = this.getDataParam();
 
-    this.options = $.extend(true, {}, defaults, options);
+    this.options = $.extend(true, defaults, options, dataParams);
 
     this.init(options);
   }
@@ -63,6 +63,10 @@ import defaults from './defaults.js';
   DataTabs.prototype.bindTriggers = bindTriggers;
   DataTabs.prototype.bindHover = bindHover;
   DataTabs.prototype.hideOnClosest = hideOnClosest;
+  DataTabs.prototype.getDataParam = function () {
+    var self = this;
+    return self.$element.data();
+  };
 
   $.fn.dataTabs = function ( _options ) {
     var args = arguments;
