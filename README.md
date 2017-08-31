@@ -3,7 +3,7 @@
 ## CDN
 
 ```
-  <script src="https://cdn.jsdelivr.net/gh/VladimirIvanin/dataTabs@0.9.1/dist/dataTabs.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/VladimirIvanin/dataTabs@0.9.2/dist/dataTabs.js"></script>
 ```
 
 ## Настройки

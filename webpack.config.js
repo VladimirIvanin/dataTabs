@@ -24,7 +24,7 @@ module.exports = {
             warnings: false
         }
     }),
-    new webpack.BannerPlugin('dataTabs v0.9.1\nhttps://github.com/VladimirIvanin/dataTabs/')
+    new webpack.BannerPlugin('dataTabs v0.9.2\nhttps://github.com/VladimirIvanin/dataTabs/')
   ],
 
   module: {
