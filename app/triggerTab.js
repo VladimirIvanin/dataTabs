@@ -61,7 +61,7 @@ export default function triggerTab(self, index) {
       if (options.useJqMethods && options.jqMethodOpen && options.jqMethodClose) {
         $targets.each(function(index, el) {
           if ($(el).is(':visible')) {
-            $targets[options.jqMethodClose](options.jqMethodCloseSpeed);
+            $(el)[options.jqMethodClose](options.jqMethodCloseSpeed);
           }
         });
       }
@@ -94,7 +94,7 @@ export default function triggerTab(self, index) {
     if (options.useJqMethods && options.jqMethodOpen && options.jqMethodClose) {
       $targets.each(function(index, el) {
         if ($(el).is(':visible')) {
-          $targets[options.jqMethodClose](options.jqMethodCloseSpeed);
+          $(el)[options.jqMethodClose](options.jqMethodCloseSpeed);
         }
       });
 

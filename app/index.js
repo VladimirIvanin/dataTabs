@@ -19,6 +19,8 @@ import defaults from './defaults.js';
 
     this.options = $.extend(true, defaults, options, dataParams);
 
+    console.log(this.options);
+
     this.init(options);
   }
 
