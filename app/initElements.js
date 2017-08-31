@@ -30,7 +30,7 @@ export function initElements () {
   // нельзя вкладывать контролы внутрь контента
   self.$anchors = self.$element.find( anchorSelector ).filter(function( index, el ) {
     let isMain = false;
-    const $parent = $(el).parents( containerSelector ).get(0);
+    const $parent = $(el).parents( containerSelector + ":first" ).get(0);
     if ($parent && $parent.dataTabs && $parent.dataTabs.uuid) {
       isMain = $parent.dataTabs.uuid == main_uuid;
     }

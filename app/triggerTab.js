@@ -59,7 +59,11 @@ export default function triggerTab(self, index) {
       $targets.removeClass( options.classes.activeTab ).addClass( options.classes.closeTab );
 
       if (options.useJqMethods && options.jqMethodOpen && options.jqMethodClose) {
-        $targets[options.jqMethodClose](options.jqMethodCloseSpeed);
+        $targets.each(function(index, el) {
+          if ($(el).is(':visible')) {
+            $targets[options.jqMethodClose](options.jqMethodCloseSpeed);
+          }
+        });
       }
 
       // Активный индекс элемента в html коллекции кнопок.
@@ -88,8 +92,15 @@ export default function triggerTab(self, index) {
     $target.removeClass( options.classes.closeTab ).addClass( options.classes.activeTab );
 
     if (options.useJqMethods && options.jqMethodOpen && options.jqMethodClose) {
-      $targets[options.jqMethodClose](options.jqMethodCloseSpeed);
-      $target[options.jqMethodOpen](options.jqMethodOpenSpeed);
+      $targets.each(function(index, el) {
+        if ($(el).is(':visible')) {
+          $targets[options.jqMethodClose](options.jqMethodCloseSpeed);
+        }
+      });
+
+      if (!$target.is(':visible')) {
+        $target[options.jqMethodOpen](options.jqMethodOpenSpeed);
+      }
     }
 
     // Активный индекс элемента в html коллекции кнопок.
