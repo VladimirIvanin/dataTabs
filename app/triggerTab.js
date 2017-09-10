@@ -16,7 +16,7 @@ export default function triggerTab(self, index) {
     index = _stopIndex;
   }
 
-  if (Number.isInteger(index)) {
+  if ($.isNumeric(index)) {
     let _$anchor = $anchors.eq(index);
     let selector = _$anchor.data(options.controls.anchor);
     let containerSelector = '[data-' + options.controls.container +']';
