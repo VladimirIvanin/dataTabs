@@ -15,6 +15,7 @@ import defaults from './defaults.js';
     this.element = element;
     this.$element = $(element);
     this.states = {};
+    this.activeHash = null;
     var dataParams = this.getDataParam();
 
     this.options = $.extend(true, {}, defaults, options);
@@ -35,6 +36,10 @@ import defaults from './defaults.js';
       if (self.options.jqMethodCloseSpeed == 0) {
         self.options.jqMethodCloseSpeed = self.options.jqMethodOpenSpeed;
       }
+    }
+
+    if (self.options.useHash) {
+      self.activeHash = window.location.hash;
     }
 
     self.initElements();

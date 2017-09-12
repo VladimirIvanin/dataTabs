@@ -8,6 +8,12 @@ export function initElements () {
   const anchorSelector = getDataAttrName(options.controls.anchor);
   const targetSelector = getDataAttrName(options.controls.target);
   const containerSelector = getDataAttrName(options.controls.container);
+  let $hash = null;
+
+  // Если есть hash
+  if (self.activeHash && typeof self.activeHash == 'string') {
+    $hash = self.$element.find( getDataAttrName(options.controls.anchor, self.activeHash.replace('#', '')) );
+  }
 
   if (!self.$element.is(containerSelector)) {
     console.warn('Не указан контейнер для блока табов: ' + containerSelector);
@@ -88,6 +94,10 @@ export function initElements () {
       console.warn('Для кнопки не назначен контент!', $(el));
     }
   });
+
+  if ($hash && $hash.length) {
+    self.options.activeIndex = $hash.index() + 1;
+  }
 
   self.counterElements = self.$anchors.length;
 }

@@ -1,14 +1,14 @@
 'use strict';
 import logger from './logger.js';
 
-export default function triggerTab(self, index) {
+export default function triggerTab(self, index, method) {
   const options = self.options;
   const main_uuid = self.$element.get(0).dataTabs.uuid;
   let $anchor = self.$element;
   let $target = null;
-
   let $targets = self.$targets;
   let $anchors = self.$anchors;
+  let isInitTabs = method && (method == 'initTabs');
 
   // если передали больше чем есть кнопок
   let _stopIndex = self.counterElements - 1;
@@ -52,7 +52,7 @@ export default function triggerTab(self, index) {
   var $swiper = $target.find('.swiper-container');
   var $owl = $target.find('.owl-carousel');
 
-  // только если активный, (isActive && options.useToggle) вызывает моргание
+  // только если активный, (isActive && options.useToggle) вызывает моргани
   if (isActive) {
     if (options.useToggle) {
       $anchors.removeClass( options.classes.activeButton ).addClass( options.classes.closeButton );
@@ -93,7 +93,7 @@ export default function triggerTab(self, index) {
 
     if (options.useJqMethods && options.jqMethodClose) {
       $.each($targets, function(_index, el) {
-        if ($(el).is(':visible')) {
+        if ($(el).is(':visible') && $(el).hasClass(options.classes.closeTab)) {
           $(el)[options.jqMethodClose](options.jqMethodCloseSpeed);
         }
       });

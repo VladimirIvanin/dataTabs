@@ -17,6 +17,7 @@ const defaults = {
   hideOnClosest: false, // hide on closest
   prevent: true, // preventDefault
   debug: false, // дебагер
+  useHash: true, // использовать window.location.hash
   useJqMethods: true, // использовать jq методы анимаций?
   loop: false, // замкнуть цикл при переключении?
   initOpenTab: true, // инициализировать активный таб?
