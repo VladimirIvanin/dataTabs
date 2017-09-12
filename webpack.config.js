@@ -2,9 +2,12 @@
 
 const webpack = require('webpack');
 const path = require('path');
+const pkg = require('./package.json');
 
 const dist = path.resolve(__dirname, 'dist/');
 const test = path.resolve(__dirname, 'test/');
+
+const isWatch = process.argv[1].indexOf('webpack-dev-server.js') > -1;
 
 module.exports = {
   entry: './app/index.js',
@@ -14,7 +17,7 @@ module.exports = {
     path: dist
   },
 
-  watch: true,
+  watch: isWatch,
 
   plugins: [
     new webpack.NoEmitOnErrorsPlugin(),
@@ -24,16 +27,22 @@ module.exports = {
             warnings: false
         }
     }),
-    new webpack.BannerPlugin('dataTabs v0.9.3\nhttps://github.com/VladimirIvanin/dataTabs/')
+    new webpack.BannerPlugin(`dataTabs v${pkg.version}\nhttps://github.com/VladimirIvanin/dataTabs/`)
   ],
 
   module: {
-
-    loaders: [{
-      test:    /\.js$/,
-      loader:  "babel-loader?presets[]=es2015"
-    }]
-
+    rules: [
+      {
+        test: /\.js$/,
+        exclude: /(node_modules|bower_components)/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: ['es2015']
+          }
+        }
+      }
+    ]
   },
 
   devServer: {
