@@ -93,7 +93,7 @@ export default function triggerTab(self, index, method) {
 
     if (options.useJqMethods && options.jqMethodClose) {
       $.each($targets, function(_index, el) {
-        if ($(el).is(':visible') && $(el).hasClass(options.classes.closeTab)) {
+        if ($(el).is(':visible') || $(el).hasClass(options.classes.closeTab)) {
           $(el)[options.jqMethodClose](options.jqMethodCloseSpeed);
         }
       });
