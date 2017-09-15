@@ -5,6 +5,7 @@ import {  binding,
           bindSwitchers,
           bindTriggers,
           bindHover,
+          closeAllTabs,
           hideOnClosest
         } from './binding.js';
 import defaults from './defaults.js';
@@ -68,6 +69,7 @@ import defaults from './defaults.js';
   DataTabs.prototype.bindSwitchers = bindSwitchers;
   DataTabs.prototype.bindTriggers = bindTriggers;
   DataTabs.prototype.bindHover = bindHover;
+  DataTabs.prototype.closeAllTabs = closeAllTabs;
   DataTabs.prototype.hideOnClosest = hideOnClosest;
   DataTabs.prototype.getDataParam = function () {
     var self = this;

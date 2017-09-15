@@ -15,6 +15,7 @@ const defaults = {
   useToggle: false, // Скрытие активных вкладок
   autoSwitching: false, // авто переключение
   hideOnClosest: false, // hide on closest
+  hideOnMouseout: false, // hide on Mouseout
   prevent: true, // preventDefault
   debug: false, // дебагер
   useHash: true, // использовать window.location.hash
@@ -23,6 +24,7 @@ const defaults = {
   initOpenTab: true, // инициализировать активный таб?
   pauseVideoAudio: true, // ставить на паузу аудио и видео при переключении табов?
   state: 'tab', // роль плагина tab/accordion
+  mouseoutTimeOut: false, // таймаут после снятия курсора
   jqMethodOpenSpeed: 300, // скорость открытия табы
   jqMethodOpen: 'fadeIn', // jq метод открытия табы
   jqMethodCloseSpeed: 0, // скорость закрытия табы

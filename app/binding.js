@@ -117,28 +117,38 @@ export function hideOnClosest() {
   $(document).on('click', function(event) {
     const $parent = $(event.target).closest( self.$element );
     const isClose = $parent.length == 0;
-    const isCloseOnJquery = (isClose && self.options.useJqMethods && self.options.jqMethodClose);
-    const closeAll = self.options.useToggle;
-
-    const activeTab = self.options.classes.activeTab;
-    const closeTab = self.options.classes.closeTab;
-    const activeButton = self.options.classes.activeButton;
-    const closeButton = self.options.classes.closeButton;
-
-    // если можно скрывать активный таб то скрываем все, иначе все кроме активного
-    let $targets = (closeAll) ? self.$targets : self.$targets.not( `.${activeTab}` );
-    let $anchors = (closeAll) ? self.$anchors : self.$anchors.not( `.${activeButton}` );
-
-    if (isCloseOnJquery) {
-      $targets[self.options.jqMethodClose]();
-    }
 
     if (isClose) {
-      $anchors.removeClass( activeButton ).addClass( closeButton );
-      $targets.removeClass( activeTab ).addClass( closeTab );
+      self.closeAllTabs();
     }
   });
+}
 
+/**
+ * Закрыть все вкладки
+ */
+export function closeAllTabs() {
+  const self = this;
+
+  const $parent = self.$element;
+  const isCloseOnJquery = (self.options.useJqMethods && self.options.jqMethodClose);
+  const closeAll = self.options.useToggle;
+
+  const activeTab = self.options.classes.activeTab;
+  const closeTab = self.options.classes.closeTab;
+  const activeButton = self.options.classes.activeButton;
+  const closeButton = self.options.classes.closeButton;
+
+  // если можно скрывать активный таб то скрываем все, иначе все кроме активного
+  let $targets = (closeAll) ? self.$targets : self.$targets.not( `.${activeTab}` );
+  let $anchors = (closeAll) ? self.$anchors : self.$anchors.not( `.${activeButton}` );
+
+  if (isCloseOnJquery) {
+    $targets[self.options.jqMethodClose]();
+  }
+
+  $anchors.removeClass( activeButton ).addClass( closeButton );
+  $targets.removeClass( activeTab ).addClass( closeTab );
 }
 
 /**
@@ -155,6 +165,18 @@ export function bindHover() {
   }, (event) => {
     $parentTabs.removeClass(options.classes.hover);
     options.onMouseout(event, self);
+
+    if (self.options.hideOnMouseout) {
+      if (self.options.mouseoutTimeOut) {
+        setTimeout(function () {
+          if (!self.$element.hasClass(options.classes.hover)) {
+            self.closeAllTabs();
+          }
+        }, self.options.mouseoutTimeOut)
+      }else{
+        self.closeAllTabs();
+      }
+    }
   });
 
 }
