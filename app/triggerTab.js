@@ -57,6 +57,7 @@ export default function triggerTab(self, index, method) {
     if (options.useToggle) {
       $anchors.removeClass( options.classes.activeButton ).addClass( options.classes.closeButton );
       $targets.removeClass( options.classes.activeTab ).addClass( options.classes.closeTab );
+      self.$element.addClass(options.activeContainer).removeClass(options.closeContainer);
 
       if (options.useJqMethods && options.jqMethodClose) {
         $.each($targets, function(_index, el) {
@@ -83,11 +84,18 @@ export default function triggerTab(self, index, method) {
       if (options.pauseVideoAudio) {
         pauseVideoAudio($targets.not(`.${options.classes.activeTab}`))
       }
+    }else{
+      self.$element.addClass(options.activeContainer).removeClass(options.closeContainer);
     }
   }else{
     $anchors.removeClass( options.classes.activeButton ).addClass( options.classes.closeButton );
     $anchor.removeClass( options.classes.closeButton ).addClass( options.classes.activeButton );
     $targets.removeClass( options.classes.activeTab ).addClass( options.classes.closeTab );
+    if (options.useToggle) {
+      self.$element.addClass(options.closeContainer).removeClass(options.activeContainer);
+    }else{
+      self.$element.addClass(options.activeContainer).removeClass(options.closeContainer);
+    }
 
     $target.removeClass( options.classes.closeTab ).addClass( options.classes.activeTab );
 

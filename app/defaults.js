@@ -40,7 +40,9 @@ const defaults = {
     activeButton: 'is-button-active',
     closeButton: 'is-button-close',
     activeTab: 'is-tab-active',
-    closeTab: 'is-tab-close'
+    closeTab: 'is-tab-close',
+    activeContainer: 'is-active-container',
+    closeContainer: 'is-close-container',
   }
 };
 
