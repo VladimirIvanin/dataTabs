@@ -3,6 +3,7 @@ import logger from './logger.js';
 
 export default function triggerTab(self, index, method) {
   const options = self.options;
+  const classes = options.classes;
   const main_uuid = self.$element.get(0).dataTabs.uuid;
   let $anchor = self.$element;
   let $target = null;
@@ -40,7 +41,7 @@ export default function triggerTab(self, index, method) {
   logger(self.options, 'triggerTab:index', index);
   logger(self.options, 'triggerTab:$anchor', $anchor);
 
-  var isActive = $anchor.hasClass( options.classes.activeButton ) && $target.is(':visible') && $target.hasClass( options.classes.activeTab );
+  var isActive = $anchor.hasClass( classes.activeButton ) && $target.is(':visible') && $target.hasClass( classes.activeTab );
 
 
   if (!options.initOpenTab) {
@@ -55,9 +56,8 @@ export default function triggerTab(self, index, method) {
   // только если активный, (isActive && options.useToggle) вызывает моргани
   if (isActive) {
     if (options.useToggle) {
-      $anchors.removeClass( options.classes.activeButton ).addClass( options.classes.closeButton );
-      $targets.removeClass( options.classes.activeTab ).addClass( options.classes.closeTab );
-      self.$element.addClass(options.activeContainer).removeClass(options.closeContainer);
+      $anchors.removeClass( classes.activeButton ).addClass( classes.closeButton );
+      $targets.removeClass( classes.activeTab ).addClass( classes.closeTab );
 
       if (options.useJqMethods && options.jqMethodClose) {
         $.each($targets, function(_index, el) {
@@ -67,41 +67,24 @@ export default function triggerTab(self, index, method) {
         });
       }
 
-      // Активный индекс элемента в html коллекции кнопок.
-      self.states.activeIndex = index;
-
-      // колбек обновления
-      self.options.onTab(self, $anchor, $target);
-
-      // обновление табов (глобальный евент)
-      $( document ).trigger( "datatabs:update", [main_uuid] );
-
-
       updateSwiper($swiper);
 
       updateOwl($owl);
 
       if (options.pauseVideoAudio) {
-        pauseVideoAudio($targets.not(`.${options.classes.activeTab}`))
+        pauseVideoAudio($targets.not(`.${classes.activeTab}`))
       }
-    }else{
-      self.$element.addClass(options.activeContainer).removeClass(options.closeContainer);
     }
   }else{
-    $anchors.removeClass( options.classes.activeButton ).addClass( options.classes.closeButton );
-    $anchor.removeClass( options.classes.closeButton ).addClass( options.classes.activeButton );
-    $targets.removeClass( options.classes.activeTab ).addClass( options.classes.closeTab );
-    if (options.useToggle) {
-      self.$element.addClass(options.closeContainer).removeClass(options.activeContainer);
-    }else{
-      self.$element.addClass(options.activeContainer).removeClass(options.closeContainer);
-    }
+    $anchors.removeClass( classes.activeButton ).addClass( classes.closeButton );
+    $anchor.removeClass( classes.closeButton ).addClass( classes.activeButton );
+    $targets.removeClass( classes.activeTab ).addClass( classes.closeTab );
 
-    $target.removeClass( options.classes.closeTab ).addClass( options.classes.activeTab );
+    $target.removeClass( classes.closeTab ).addClass( classes.activeTab );
 
     if (options.useJqMethods && options.jqMethodClose) {
       $.each($targets, function(_index, el) {
-        if ($(el).is(':visible') || $(el).hasClass(options.classes.closeTab)) {
+        if ($(el).is(':visible') || $(el).hasClass(classes.closeTab)) {
           $(el)[options.jqMethodClose](options.jqMethodCloseSpeed);
         }
       });
@@ -111,24 +94,34 @@ export default function triggerTab(self, index, method) {
       $target[options.jqMethodOpen](options.jqMethodOpenSpeed);
     }
 
-    // Активный индекс элемента в html коллекции кнопок.
-    self.states.activeIndex = index;
-
-    // колбек обновления
-    self.options.onTab(self, $anchor, $target);
-
-    // обновление табов (глобальный евент)
-    $( document ).trigger( "datatabs:update", [main_uuid] );
-
     updateSwiper($swiper);
 
     updateOwl($owl);
 
     if (options.pauseVideoAudio) {
-      pauseVideoAudio($targets.not(`.${options.classes.activeTab}`))
+      pauseVideoAudio($targets.not(`.${classes.activeTab}`))
     }
-
   }
+
+  // Активный индекс элемента в html коллекции кнопок.
+  self.states.activeIndex = index;
+
+  // колбек обновления
+  self.options.onTab(self, $anchor, $target);
+
+  // обновление табов (глобальный евент)
+  $( document ).trigger( "datatabs:update", [main_uuid] );
+
+  if (options.useToggle) {
+    if (isActive) {
+      self.$element.addClass(classes.closeContainer).removeClass(classes.activeContainer);
+    }else{
+      self.$element.addClass(classes.activeContainer).removeClass(classes.closeContainer);
+    }
+  }else{
+    self.$element.addClass(classes.activeContainer).removeClass(classes.closeContainer);
+  }
+
 }
 
 function updateSwiper($swiper) {
