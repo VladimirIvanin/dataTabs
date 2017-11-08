@@ -128,7 +128,11 @@ function updateSwiper($swiper) {
   if ($swiper && $swiper[0] && $swiper[0].swiper) {
     $.each($swiper, function(index, $el) {
       if ($el.swiper.update) {
-        $el.swiper.update(true);
+        $el.swiper.update();
+      }
+      if ($el.swiper.pagination && $el.swiper.pagination.render) {
+        $el.swiper.pagination.render();
+        $el.swiper.pagination.update();
       }
     });
   }
