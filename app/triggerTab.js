@@ -51,7 +51,6 @@ export default function triggerTab(self, index, method) {
   logger(self.options, 'triggerTab:isActive', isActive);
 
   var $swiper = $target.find('.swiper-container');
-  var $owl = $target.find('.owl-carousel');
 
   // только если активный, (isActive && options.useToggle) вызывает моргани
   if (isActive) {
@@ -68,8 +67,6 @@ export default function triggerTab(self, index, method) {
       }
 
       updateSwiper($swiper);
-
-      updateOwl($owl);
 
       if (options.pauseVideoAudio) {
         pauseVideoAudio($targets.not(`.${classes.activeTab}`))
@@ -135,12 +132,6 @@ function updateSwiper($swiper) {
         $el.swiper.pagination.update();
       }
     });
-  }
-}
-
-function updateOwl($owl) {
-  if ($owl && $owl.owlCarousel && $owl.owlCarousel().trigger) {
-    $owl.owlCarousel().trigger('refresh.owl.carousel');
   }
 }
 
