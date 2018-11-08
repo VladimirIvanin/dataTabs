@@ -93,8 +93,6 @@ export default function triggerTab(self, index, method) {
 
     updateSwiper($swiper);
 
-    updateOwl($owl);
-
     if (options.pauseVideoAudio) {
       pauseVideoAudio($targets.not(`.${classes.activeTab}`))
     }
