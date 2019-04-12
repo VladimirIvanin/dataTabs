@@ -10,6 +10,7 @@ const defaults = {
     'next': 'tab-next',
     'prev': 'tab-prev'
   },
+  pauseOnHover: true, // останавливать при наведении?
   activeIndex: 1, // активный элемент
   speedSwitching: 5000, // скорость авто переключения
   useToggle: false, // Скрытие активных вкладок

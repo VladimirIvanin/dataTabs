@@ -39,7 +39,7 @@ export default function autoSwitching () {
 
     var isFocused = $parent.hasClass(options.classes.hover);
 
-    if (!isFocused) {
+    if (!isFocused || !options.pauseOnHover) {
       triggerTab(self, _next);
     }
   }
