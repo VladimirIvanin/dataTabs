@@ -1,6 +1,6 @@
 {
   "name": "datatabs",
-  "version": "0.12.2",
+  "version": "0.12.3",
   "description": "jQuery tabs",
   "main": "dist/dataTabs.js",
   "scripts": {

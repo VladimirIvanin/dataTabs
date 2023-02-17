@@ -119,7 +119,7 @@ export default function autoSwitching () {
     resumeTimeout = setTimeout(() => {
       nextTab()
       triggerTabs = setInterval(nextTab, options.speedSwitching);
-    }, timeOut - 1000);
+    }, timeOut);
   }
 
   function startCountInterval() {
