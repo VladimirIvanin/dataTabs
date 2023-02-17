@@ -63,6 +63,18 @@ export default function autoSwitching () {
     startCountInterval()
   }, 0)
 
+  document.addEventListener("visibilitychange", function () {
+    if (document.hidden) {
+      $elementBinding.each(function () {
+        stopAnimate($(this))
+      })
+    } else {
+      $elementBinding.each(function () {
+        resumeAnimate($(this))
+      })
+    }
+  });
+
   let nextTab = function () {
     $parent.removeClass(options.classes.stopAnimate)
     stateSwitching = 'animate'
