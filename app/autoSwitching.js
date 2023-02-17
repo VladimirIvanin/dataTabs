@@ -79,7 +79,7 @@ export default function autoSwitching () {
       _next = 0;
     }
 
-    if (stateSwitching == 'animate') {
+    if (stateSwitching == 'animate' && !document.hidden) {
       clearInterval(counterInterval);
       clearTimeout(resumeTimeout);
       startCountInterval()
@@ -115,6 +115,9 @@ export default function autoSwitching () {
     counterInterval = setInterval(() => {
       if (stateSwitching == 'animate' && counter > 0) {
         counter = counter - 1000
+      }
+      if (counter == 0) {
+        clearInterval(counterInterval);
       }
     }, 1000)
   }
