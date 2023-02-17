@@ -29,7 +29,7 @@ export function bindSwitchers() {
       let nextStatus = getStatusNext(self, stopIndex);
 
       if (nextStatus.isNext) {
-        triggerTab(self, nextStatus.next);
+        triggerTab(self, nextStatus.next, { type: 'next' });
       }
     });
   }
@@ -53,7 +53,7 @@ export function bindSwitchers() {
       let prevStatus = getStatusPrev(self, stopIndex);
 
       if (prevStatus.isPrev) {
-        triggerTab(self, prevStatus.prev);
+        triggerTab(self, prevStatus.prev, { type: 'prev' });
       }
     });
   }
@@ -100,7 +100,7 @@ export function bindTriggers() {
 
     const anchor = $(this).get(0);
 
-    triggerTab(self, anchor.dataTabs.myIndex)
+    triggerTab(self, anchor.dataTabs.myIndex, event)
 
   });
 }
@@ -158,6 +158,17 @@ export function bindHover() {
   const self = this;
   const options = self.options;
   const $parentTabs = self.$element;
+  let isTouch = isTouchDevice()
+
+  $parentTabs.on('touchstart', function (event) {
+    $parentTabs.addClass(options.classes.hover);
+  });
+
+  $parentTabs.on('touchend', function (event) {
+    $parentTabs.removeClass(options.classes.hover);
+  });
+
+  if (isTouch) return;
 
   $parentTabs.hover((event) => {
     $parentTabs.addClass(options.classes.hover);
@@ -179,4 +190,10 @@ export function bindHover() {
     }
   });
 
+}
+
+function isTouchDevice() {
+  return (('ontouchstart' in window) ||
+    (navigator.maxTouchPoints > 0) ||
+    (navigator.msMaxTouchPoints > 0));
 }

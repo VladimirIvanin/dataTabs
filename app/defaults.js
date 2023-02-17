@@ -11,6 +11,8 @@ const defaults = {
     'prev': 'tab-prev'
   },
   pauseOnHover: true, // останавливать при наведении?
+  pauseOnTap: true, // останавливать при тапе?
+  pauseTarget: 'parent', // Останавливать при наведении на весь блок или на item ('parent', 'anchor', 'target')
   activeIndex: 1, // активный элемент
   speedSwitching: 5000, // скорость авто переключения
   useToggle: false, // Скрытие активных вкладок
@@ -44,6 +46,8 @@ const defaults = {
     closeTab: 'is-tab-close',
     activeContainer: 'is-active-container',
     closeContainer: 'is-close-container',
+    stopAnimate: 'stop-animate',
+    beforeOut: 'before-out'
   }
 };
 

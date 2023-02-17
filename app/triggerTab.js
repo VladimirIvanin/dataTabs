@@ -1,7 +1,7 @@
 'use strict';
 import logger from './logger.js';
 
-export default function triggerTab(self, index, method) {
+export default function triggerTab(self, index, eventObject) {
   const options = self.options;
   const classes = options.classes;
   const main_uuid = self.$element.get(0).dataTabs.uuid;
@@ -9,7 +9,6 @@ export default function triggerTab(self, index, method) {
   let $target = null;
   let $targets = self.$targets;
   let $anchors = self.$anchors;
-  let isInitTabs = method && (method == 'initTabs');
 
   // если передали больше чем есть кнопок
   let _stopIndex = self.counterElements - 1;
@@ -102,10 +101,10 @@ export default function triggerTab(self, index, method) {
   self.states.activeIndex = index;
 
   // колбек обновления
-  self.options.onTab(self, $anchor, $target);
+  self.options.onTab(self, $anchor, $target, eventObject);
 
   // обновление табов (глобальный евент)
-  $( document ).trigger( "datatabs:update", [main_uuid] );
+  $(document).trigger("datatabs:update", [main_uuid, eventObject]);
 
   if (options.useToggle) {
     if (isActive) {
@@ -114,7 +113,9 @@ export default function triggerTab(self, index, method) {
       self.$element.addClass(classes.activeContainer).removeClass(classes.closeContainer);
     }
   }else{
+    self.$element.addClass(classes.beforeOut);
     self.$element.addClass(classes.activeContainer).removeClass(classes.closeContainer);
+    self.$element.removeClass(classes.beforeOut);
   }
 
 }

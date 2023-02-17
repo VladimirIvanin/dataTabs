@@ -12,11 +12,11 @@ export default function initTabs (self, activeIndex) {
       _activeTab = 0;
     }
 
-    triggerTab(self, _activeTab, 'initTabs');
+    triggerTab(self, _activeTab, { type: 'init' });
   }else{
     if (isArray) {
       $.each(activeIndex, function(index, el) {
-        triggerTab(self, el, 'initTabs');
+        triggerTab(self, el, { type: 'init' });
       });
     }
   }
